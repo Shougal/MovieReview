@@ -1,0 +1,14 @@
+#searchbar {
+    border: black 1px solid;
+    border-radius: 9999px;
+    height: 25px;
+    width: 30vw;
+    font-size: small;
+}
+#profile-container {
+    justify-content: end;
+}
+#pfp {
+    height: 10px;
+    width: auto;
+}
