@@ -4,6 +4,7 @@ h1 {
 }
 .fav-movie-card {
     height: fit-content;
+    background-color: dimgray;
     h2 {
         font-size: 2rem;
     }
