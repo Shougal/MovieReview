@@ -1,10 +1,16 @@
 body{
     background-color: black;
 }
-
-nav{
+h1 {
+    color: white;
+    text-decoration: underline;
+}
+footer{
     background-color: dimgray;
     color: white;
+}
+nav{
+    background-color: dimgray;
 }
 .navbar-brand {
     color: white !important;
@@ -20,11 +26,6 @@ nav{
         color: black;
         text-decoration: underline;
     }
-}
-
-h1 {
-    color: white;
-    text-decoration: underline;
 }
 
 .fav-movie-card {
@@ -55,13 +56,20 @@ h1 {
     width: 100%;
 }
 
-footer{
-    background-color: dimgray;
-    color: white;
+.deco-star-rating {
+    font-size: 3rem;
+    color: gold;
+    display: flex;
+    justify-content: end;
+    .unchecked {
+        color: grey;
+    }
 }
 
 .star-rating {
-    font-size: 2.5rem;
+    color: grey;
+    display: flex;
+    justify-content: end;
     input {
         display: none; /* Hide the original radio buttons */
     }
@@ -72,4 +80,35 @@ footer{
 }
 .star-rating label:hover, .star-rating label:hover ~ label {
     color: #ffcc00;
+}
+
+.add-fav-heart{
+    font-size: 2rem;
+    color: dimgray;
+    input {
+        display: none;
+    }
+}
+.add-fav-heart input:checked + label, .add-fav-heart label:hover {
+    color: red;
+}
+.heart-txt {
+    font-size: 1rem;
+}
+#review-text-area {
+    width: 100%;
+}
+
+.overall-rating {
+    color: white;
+    label {
+        font-size: 5rem;
+        margin-top: -30px;
+    }
+}
+.mood-rating, .other-factors-rating {
+    color: white;
+    label {
+        font-size: 2rem;
+    }
 }
