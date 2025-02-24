@@ -1,0 +1,15 @@
+.card{
+    margin-top: 10%;
+    border-radius: 5%;
+    background-color: dimgray;
+   
+    /* background-color: aliceblue; */
+}
+.card .btn{
+    background-color: brown;
+    border-color: brown;
+}
+
+.bottom-card{
+    margin-bottom: 10%;
+}

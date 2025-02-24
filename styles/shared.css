@@ -1,0 +1,30 @@
+body{
+    background-color: black;
+}
+nav{
+    background-color: dimgray;
+}
+.navbar-brand {
+    color: white !important;
+}
+.navbar #navbarSupportedContent .navbar-nav .nav-item{
+    .nav-link {
+        color: white;
+    }
+    .active {
+        color: black;
+    }
+    .nav-link:hover{
+        color: black;
+        text-decoration: underline;
+    }
+}
+#pfp {
+    border-radius: 100%;
+    width: 50px;
+    height: 50px;
+}
+footer{
+    background-color: dimgray;
+    color: white;
+}
