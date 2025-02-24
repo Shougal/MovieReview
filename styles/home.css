@@ -1,51 +1,75 @@
-#searchbar {
-    border: black 1px solid;
-    border-radius: 9999px;
-    height: 25px;
-    width: 30vw;
-    font-size: small;
-}
-#profile-container {
-    justify-content: end;
-}
-#pfp {
-    height: 10px;
-    width: auto;
-}
-
-
-.card{
-    margin-top: 10%;
-    border-radius: 5%;
-    background-color: dimgray;
-
-    /* background-color: aliceblue; */
-}
-.card .btn{
-    background-color: brown;
-    border-color: brown;
-}
-
-.bottom-card{
-    margin-bottom: 10%;
-}
 body{
     background-color: black;
 }
+
 nav{
     background-color: dimgray;
     color: white;
 }
-
-.navbar-light .navbar-nav .nav-link,
-.navbar-light .navbar-nav .nav-link:visited, /* Targets active nav links */
-.navbar-light .navbar-brand  {
-    color: white;
+.navbar-brand {
+    color: white !important;
+}
+.navbar #navbarSupportedContent .navbar-nav .nav-item{
+    .nav-link {
+        color: white;
+    }
+    .active {
+        color: black;
+    }
+    .nav-link:hover{
+        color: black;
+        text-decoration: underline;
+    }
 }
 
+h1 {
+    color: white;
+    text-decoration: underline;
+}
+
+.fav-movie-card {
+    height: fit-content;
+    h2 {
+        font-size: 2rem;
+    }
+    p {
+        font-size: 1rem;
+    }
+    .row {
+        height: 100%;
+        [class^="col"]{
+            height: 100%;
+        }
+    }
+}
+.img-container {
+    overflow: hidden;
+}
+.fav-movie-img {
+    width: 100%;
+    height: 100%;
+    object-position: center;
+    border-radius: 2%;
+}
+.fav-button {
+    width: 100%;
+}
 
 footer{
     background-color: dimgray;
     color: white;
+}
 
+.star-rating {
+    font-size: 2.5rem;
+    input {
+        display: none; /* Hide the original radio buttons */
+    }
+    direction: rtl; /* Because HTML elements can only effect later elements, this reverses the display order of stars */
+}
+.star-rating input:checked ~ label, .star-rating input:checked + label {
+    color: #ffcc00;
+}
+.star-rating label:hover, .star-rating label:hover ~ label {
+    color: #ffcc00;
 }

@@ -11,20 +11,19 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-light ">
         <!--TODO: Add actual Logo and image-->
-        <a class="navbar-brand" href="#">
+        <p class="navbar-brand ml-0 mt-0 mb-0 mr-4">
             <img src="/docs/4.0/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
-            Bootstrap
-        </a>
+            MovieReviews
+        </p>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-
         <!--TODO: add navigations-->
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav mr-auto" id="mynavlinks">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link active" href="#">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="userMovies.html">Your Movies</a>
@@ -48,6 +47,145 @@
             </button> -->
         </div>
     </nav>
+
+    <h1 class="mt-2 mb-4 ml-3">User's Top Movies</h1>
+
+    <div class="container-xxl m-3" id="movie1">
+        <div class="card m-0 p-0 fav-movie-card">
+            <div class="row align-items-center">
+                <!--TODO: Fix image fill/sizing on different sized screens -->
+                <div class="col-md-3 m-0 img-container">
+                    <img class="fav-movie-img" src="/images/darkknight.jpg" alt="Cover art for the Dark Knight">
+                </div>
+                <div class="col-md-9 pl-5 pr-5 pt-2 pb-2 d-flex flex-column">
+                    <div class="row align-items-center">
+                        <div class="container col-md-5 m-0 p-0">
+                            <h2>The Dark Knight Rises</h2>
+                        </div>
+                        <div class="container col-md-7 m-0 p-0">
+                            <form action="#" method="POST">
+                                <div class="star-rating">
+                                    <!-- Radio buttons to create 5 star rating -->
+                                    <input type="radio" id="star1"><label for="star1">&#9733;</label>
+                                    <input type="radio" id="star2"><label for="star2">&#9733;</label>
+                                    <input type="radio" id="star3"><label for="star3">&#9733;</label>
+                                    <input type="radio" id="star4"><label for="star4">&#9733;</label>
+                                    <input type="radio" id="star5"><label for="star5">&#9733;</label>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <p>Text about the movie lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Nulla vitae elit libero, a pharetra augue. Nullam id dolor id nibh ultricies vehicula ut id elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</p>
+                    </div>
+                    <div class="row mt-auto mb-2">
+                        <div class="col-4 pl-0 ml-0">
+                            <button type="button" class="btn btn-primary fav-button">View Your Rating Here</button>
+                        </div>
+                        <div class="col-4 pl-0 ml-0">
+                            <button type="button" class="btn btn-outline-secondary fav-button">Learn About This Title</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-xxl m-3" id="movie2">
+        <div class="card m-0 p-0 fav-movie-card">
+            <div class="row align-items-center">
+                <div class="col-md-3 m-0 img-container">
+                    <img class="fav-movie-img" src="/images/forrestgump.jpg" alt="Cover art for Forrest Gump">
+                </div>
+                <div class="col-md-9 pl-5 pr-5 pt-2 pb-2 d-flex flex-column">
+                    <div class="row align-items-center">
+                        <div class="container col-5 m-0 p-0">
+                            <h2>Forrest Gump</h2>
+                        </div>
+                        <div class="container col-6 m-0 p-0">
+                            <form action="#" method="POST">
+                                <div class="star-rating">
+                                    <!-- Radio buttons to create 5 star rating -->
+                                    <input type="radio" id="star6"><label for="star6">&#9733;</label>
+                                    <input type="radio" id="star7"><label for="star7">&#9733;</label>
+                                    <input type="radio" id="star8"><label for="star8">&#9733;</label>
+                                    <input type="radio" id="star9"><label for="star9">&#9733;</label>
+                                    <input type="radio" id="starA"><label for="starA">&#9733;</label>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <p>Text about the movie lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Nulla vitae elit libero, a pharetra augue. Nullam id dolor id nibh ultricies vehicula ut id elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</p>
+                    </div>
+                    <div class="row mt-auto mb-2">
+                        <div class="col-4 pl-0 ml-0">
+                            <button type="button" class="btn btn-primary fav-button">View Your Rating Here</button>
+                        </div>
+                        <div class="col-4 pl-0 ml-0">
+                            <button type="button" class="btn btn-outline-secondary fav-button">Learn About This Title</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-xxl m-3" id="movie3">
+        <div class="card m-0 p-0 fav-movie-card">
+            <div class="row align-items-center">
+                <div class="col-md-3 m-0">
+                    <img class="fav-movie-img" src="/images/emojiemovie.jpg" alt="Cover art for the Emoji Movie">
+                </div>
+                <div class="col-md-9 pl-5 pr-5 pt-2 pb-2 d-flex flex-column">
+                    <div class="row align-items-center">
+                        <div class="container col-5 m-0 p-0">
+                            <h2>The Emoji Movie</h2>
+                        </div>
+                        <div class="container col-6 m-0 p-0">
+                            <form action="#" method="POST">
+                                <div class="star-rating">
+                                    <!-- Radio buttons to create 5 star rating -->
+                                    <input type="radio" id="starB"><label for="starB">&#9733;</label>
+                                    <input type="radio" id="starC"><label for="starC">&#9733;</label>
+                                    <input type="radio" id="starD"><label for="starD">&#9733;</label>
+                                    <input type="radio" id="starE"><label for="starE">&#9733;</label>
+                                    <input type="radio" id="starF"><label for="starF">&#9733;</label>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <p>Text about the movie lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Nulla vitae elit libero, a pharetra augue. Nullam id dolor id nibh ultricies vehicula ut id elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</p>
+                    </div>
+                    <div class="row mt-auto mb-2">
+                        <div class="col-4 pl-0 ml-0">
+                            <button type="button" class="btn btn-primary fav-button">View Your Rating Here</button>
+                        </div>
+                        <div class="col-4 pl-0 ml-0">
+                            <button type="button" class="btn btn-outline-secondary fav-button">Learn About This Title</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-xxl m-3">
+        <div class="card m-0 p-0">
+            <div class="row align-items-center">
+                <div class="col-md-6 ml-5 mt-4 mb-1">
+                    <p>Looking to add to your top 3? Revise your ratings or search for new movies!</p>
+                </div>
+                <div class="col-2">
+                    <button type="button" class="btn btn-outline-secondary fav-button">Your Movies</button>
+                </div>
+                <div class="col-3">
+                    <button type="button" class="btn btn-primary fav-button">View Your Recommendations -></button>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <footer class="text-center text-white">
@@ -91,7 +229,45 @@
                 </div>
                 <!-- Grid row-->
             </section>
+            <!-- Section: Links -->
 
+            <hr class="my-5" />
+
+            <!-- Section: Text -->
+            <section class="mb-5">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-lg-8">
+                        <!--TODO: Add user friendly description-->
+                        <p>
+                            This application allows users to rate and review movies. Ratings and reviews are stored in a database and reflected dynamically on the user interface. The app features a secure login system, personalized user pages, and a recommendation engine that suggests movies based on user preferences.
+                        </p>
+                    </div>
+                </div>
+            </section>
+            <!-- Section: Text -->
+
+            <!-- TODO: Add Section: Social if we end up wanting to add github repo -->
+            <!-- <section class="text-center mb-5">
+              <a href="" class="text-white me-4">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a href="" class="text-white me-4">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="" class="text-white me-4">
+                <i class="fab fa-google"></i>
+              </a>
+              <a href="" class="text-white me-4">
+                <i class="fab fa-instagram"></i>
+              </a>
+              <a href="" class="text-white me-4">
+                <i class="fab fa-linkedin"></i>
+              </a>
+              <a href="" class="text-white me-4">
+                <i class="fab fa-github"></i>
+              </a>
+            </section> -->
+            <!-- Section: Social -->
         </div>
         <!-- Grid container -->
 
