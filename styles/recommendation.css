@@ -1,0 +1,47 @@
+.fav-movie-card {
+    height: fit-content;
+    background-color: dimgray;
+    h2 {
+        font-size: 2rem;
+    }
+    p {
+        font-size: 1rem;
+    }
+    .row {
+        height: 100%;
+        [class^="col"]{
+            height: 100%;
+        }
+    }
+}
+.img-container {
+    overflow: hidden;
+}
+.fav-movie-img {
+    width: 100%;
+    height: 100%;
+    object-position: center;
+    border-radius: 2%;
+}
+.fav-button {
+    width: 100%;
+}
+
+.recommendation-good {
+    color: darkgreen;
+}
+.recommendation-mid {
+    color: yellow;
+}
+.recommendation-bad {
+    color: lightcoral;
+}
+.deco-star-rating {
+    font-size: 2rem;
+    color: gold;
+    display: flex;
+    justify-content: end;
+    .unchecked {
+        color: grey;
+    }
+}
