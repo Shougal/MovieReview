@@ -2,7 +2,6 @@
 <!--Sources: https://getbootstrap.com/docs/4.6/components/alerts/ -->
 <html lang="en">
     <head>
-        <!-- https://cs4640.cs.virginia.edu/qvh7fp/sprint2/templates/ -->
 
         <Title>MovieReview</Title>
         <meta name="author" content="Rob Keys">
@@ -14,14 +13,14 @@
         <meta property="og:type" content="index.txt">
 
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <link rel="stylesheet" href="../styles/home.css">
-        <link rel="stylesheet" href="../styles/shared.css">
+        <link rel="stylesheet" href="styles/home.css">
+        <link rel="stylesheet" href="styles/shared.css">
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-light ">
             <!--TODO: Add actual Logo and image-->
             <p class="navbar-brand ml-0 mt-0 mb-0 mr-4">
-                <img src="../docs/4.0/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+                <img src="images/MR.png" width="30" height="30" class="d-inline-block align-top" alt="">
                 MovieReviews
             </p>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,26 +29,33 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto" id="mynavlinks">
+                    <li class="nav-item">
+                        <form action="?command=home" method="post">
+                            <button class="btn btn-link text-light" type="submit">Home</button>
+                        </form>
+                    </li>
+                    <li class="nav-item">
+                        <form action="?command=user_movies" method="post">
+                            <button class="btn btn-link text-light" type="submit">Your Movies</button>
+                        </form>
+                    </li>
+                    <li class="nav-item">
+                        <form action="?command=recommendations" method="post">
+                            <button class="btn btn-link text-light" type="submit">Recommendations</button>
+                        </form>
+                    </li>
                     <li class="nav-item active">
-                        <a class="nav-link active" href="index.html">Home</a>
+                        <form action="?command=review" method="post">
+                            <button class="btn btn-link text-light" type="submit">Review</button>
+                        </form>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="userMovies.html">Your Movies</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="userRecommendation.html">Recommendations</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="review.html">Review</a>
-                    </li>
-
                 </ul>
 
                 <form class="form-inline my-2 my-lg-0">
                     <input class="form-control mr-sm-2" type="search" placeholder="Search All Movies" aria-label="Search">
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                 </form>
-                <a href="#"><img src="../images/defaultpfp.jpg" alt="Default profile photo for an anonymous user" class="ml-2" id="pfp"></a>
+                <a href="#"><img src="images/defaultpfp.jpg" alt="Default profile photo for an anonymous user" class="ml-2" id="pfp"></a>
             </div>
         </nav>
 
@@ -59,7 +65,7 @@
             <div class="card m-0 p-0 fav-movie-card">
                 <div class="row align-items-center">
                     <div class="col-md-3 m-0 img-container">
-                        <img class="fav-movie-img" src="../images/darkknight.jpg" alt="Cover art for the Dark Knight">
+                        <img class="fav-movie-img" src="images/darkknight.jpg" alt="Cover art for the Dark Knight">
                     </div>
                     <div class="col-md-9 pl-5 pr-5 pt-2 pb-2 d-flex flex-column">
                         <div class="row align-items-center">
@@ -96,7 +102,7 @@
             <div class="card m-0 p-0 fav-movie-card">
                 <div class="row align-items-center">
                     <div class="col-md-3 m-0 img-container">
-                        <img class="fav-movie-img" src="../images/forrestgump.jpg" alt="Cover art for Forrest Gump">
+                        <img class="fav-movie-img" src="images/forrestgump.jpg" alt="Cover art for Forrest Gump">
                     </div>
                     <div class="col-md-9 pl-5 pr-5 pt-2 pb-2 d-flex flex-column">
                         <div class="row align-items-center">
@@ -133,7 +139,7 @@
             <div class="card m-0 p-0 fav-movie-card">
                 <div class="row align-items-center">
                     <div class="col-md-3 m-0">
-                        <img class="fav-movie-img" src="../images/emojiemovie.jpg" alt="Cover art for the Emoji Movie">
+                        <img class="fav-movie-img" src="images/emojiemovie.jpg" alt="Cover art for the Emoji Movie">
                     </div>
                     <div class="col-md-9 pl-5 pr-5 pt-2 pb-2 d-flex flex-column">
                         <div class="row align-items-center">
@@ -192,7 +198,7 @@
                         <!-- Grid column -->
                         <div class="col-md-2">
                             <h6 class="text-uppercase font-weight-bold">
-                                <a href="index.html" class="text-white">Home</a>
+                                <a href="home.html" class="text-white">Home</a>
                             </h6>
                         </div>
                         <!-- Grid column -->
