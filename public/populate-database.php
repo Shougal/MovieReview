@@ -7,6 +7,8 @@
     } else {
         die("An error occurred connecting to the database");
     }
+
+
     
     // Drop tables and sequences (that are created later)
     $res  = pg_query($dbHandle, "drop sequence if exists spr3_users_seq cascade;");
@@ -22,12 +24,15 @@
     $res  = pg_query($dbHandle, "create sequence spr3_movies_seq;");
     
     // Create tables
+    //TODO: adding constraints like UNIQUE for email to prevent duplicate registrations.
+    // Add NOT NULL 
     $res  = pg_query($dbHandle, "create table spr3_users (
             id int primary key default nextval('spr3_users_seq'),
             name text,
             email text,
             password text);");
 
+        //TODO:  ensure uid (user ID) and mid (movie ID) are linked to their respective tables using foreign key constraints. 
     $res  = pg_query($dbHandle, "create table spr3_reviews (
             id int primary key default nextval('spr3_reviews_seq'),
             uid int,
@@ -44,6 +49,7 @@
             rewatch int,
             cinema int,);");
 
+            //TODO: could include more metadata about movies, such as title, director, and release_date. 
     $res  = pg_query($dbHandle, "create table spr3_movies (
             id int primary key default nextval('spr3_movies_seq'),
             thumbnail_url text,
