@@ -15,47 +15,73 @@
         <link rel="stylesheet" href="styles/shared.css">
     </head>
     <body>
-    <nav class="navbar navbar-expand-lg navbar-light ">
-        <!--TODO: Add actual Logo and image-->
-        <p class="navbar-brand ml-0 mt-0 mb-0 mr-4">
-            <img src="images/MR.png" width="30" height="30" class="d-inline-block align-top" alt="">
-            MovieReviews
-        </p>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+        <nav class="navbar navbar-expand-lg navbar-light ">
+            <!--TODO: Add actual Logo and image-->
+            <p class="navbar-brand ml-0 mt-0 mb-0 mr-4">
+                <img src="images/MR.png" width="30" height="30" class="d-inline-block align-top" alt="">
+                MovieReviews
+            </p>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto" id="mynavlinks">
-                <li class="nav-item">
-                    <form action="?command=home" method="post">
-                        <button class="btn btn-link text-light" type="submit">Home</button>
-                    </form>
-                </li>
-                <li class="nav-item">
-                    <form action="?command=user_movies" method="post">
-                        <button class="btn btn-link text-light" type="submit">Your Movies</button>
-                    </form>
-                </li>
-                <li class="nav-item">
-                    <form action="?command=recommendations" method="post">
-                        <button class="btn btn-link text-light" type="submit">Recommendations</button>
-                    </form>
-                </li>
-                <li class="nav-item active">
-                    <form action="?command=review" method="post">
-                        <button class="btn btn-link text-light" type="submit">Review</button>
-                    </form>
-                </li>
-            </ul>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto" id="mynavlinks">
+                    <li class="nav-item">
+                        <form action="?command=home" method="post">
+                            <button class="btn btn-link text-light" type="submit">Home</button>
+                        </form>
+                    </li>
+                    <li class="nav-item">
+                        <form action="?command=user_movies" method="post">
+                            <button class="btn btn-link text-light" type="submit">Your Movies</button>
+                        </form>
+                    </li>
+                    <li class="nav-item">
+                        <form action="?command=recommendations" method="post">
+                            <button class="btn btn-link text-light" type="submit">Recommendations</button>
+                        </form>
+                    </li>
+                    <?php
+                    if (isset($_SESSION["username"])){
+                        echo '<li class="nav-item active">
+                                    <form action="?command=review" method="post">
+                                        <button class="btn btn-link text-light" type="submit">Review</button>
+                                    </form>
+                                  </li>';
+                    } else {
+                        echo '<li class="nav-item active">
+                                    <form action="?command=login" method="post">
+                                        <button class="btn btn-link text-light" type="submit">Login</button>
+                                    </form>
+                                  </li>';
+                    }
+                    ?>
+                </ul>
 
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search All Movies" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
-            <a href="#"><img src="images/defaultpfp.jpg" alt="Default profile photo for an anonymous user" class="ml-2" id="pfp"></a>
-        </div>
-    </nav>
+                <form class="form-inline my-2 my-lg-0 mr-auto">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search All Movies" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+                <?php
+                if(isset($_SESSION["username"])){
+                    echo '<form class="form-inline ml-5" action="?command=account" method="post">
+                                <button class="d-flex" style="background: none; border: none; cursor: pointer;" type="submit">
+                                    <p class="mt-3">' . $_SESSION["username"] . '</p>
+                                    <img src="images/'.$_SESSION["pfp"].'" alt="Default profile photo for an anonymous user" class="ml-2" id="pfp">
+                                </button>
+                              </form>';
+                } else {
+                    echo '<form class="form-inline ml-5" action="?command=login" method="post">
+                                <button class="d-flex" style="background: none; border: none; cursor: pointer;" type="submit">
+                                    <p class="mt-3"> Guest </p>
+                                    <img src="images/defaultpfp.jpg" alt="Default profile photo for an anonymous user" class="ml-2" id="pfp">
+                                </button>
+                              </form>';
+                }
+                ?>
+            </div>
+        </nav>
 
         <div class="container-xxl">
             <div class="row justify-content-between">
@@ -257,7 +283,7 @@
                         <!-- Grid column -->
                         <div class="col-md-2">
                             <h6 class="text-uppercase font-weight-bold">
-                                <a href="home.html" class="text-white">Home</a>
+                                <a href="home.php" class="text-white">Home</a>
                             </h6>
                         </div>
                         <!-- Grid column -->
@@ -265,7 +291,7 @@
                         <!-- Grid column -->
                         <div class="col-md-2">
                             <h6 class="text-uppercase font-weight-bold">
-                                <a href="userMovies.html" class="text-white">Your Movies</a>
+                                <a href="userMovies.php" class="text-white">Your Movies</a>
                             </h6>
                         </div>
                         <!-- Grid column -->
@@ -273,7 +299,7 @@
                         <!-- Grid column -->
                         <div class="col-md-2">
                             <h6 class="text-uppercase font-weight-bold">
-                                <a href="userRecommendation.html" class="text-white">Recommendations</a>
+                                <a href="userRecommendation.php" class="text-white">Recommendations</a>
                             </h6>
                         </div>
                         <!-- Grid column -->

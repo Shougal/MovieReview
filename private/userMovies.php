@@ -54,18 +54,44 @@
                             <button class="btn btn-link text-light" type="submit">Recommendations</button>
                         </form>
                     </li>
-                    <li class="nav-item active">
-                        <form action="?command=review" method="post">
-                            <button class="btn btn-link text-light" type="submit">Review</button>
-                        </form>
-                    </li>
+                    <?php
+                    if (isset($_SESSION["username"])){
+                        echo '<li class="nav-item active">
+                                <form action="?command=review" method="post">
+                                    <button class="btn btn-link text-light" type="submit">Review</button>
+                                </form>
+                              </li>';
+                    } else {
+                        echo '<li class="nav-item active">
+                                <form action="?command=login" method="post">
+                                    <button class="btn btn-link text-light" type="submit">Login</button>
+                                </form>
+                              </li>';
+                    }
+                    ?>
                 </ul>
 
-                <form class="form-inline my-2 my-lg-0">
+                <form class="form-inline my-2 my-lg-0 mr-auto">
                     <input class="form-control mr-sm-2" type="search" placeholder="Search All Movies" aria-label="Search">
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                 </form>
-                <a href="#"><img src="images/defaultpfp.jpg" alt="Default profile photo for an anonymous user" class="ml-2" id="pfp"></a>
+                <?php
+                if(isset($_SESSION["username"])){
+                    echo '<form class="form-inline ml-5" action="?command=account" method="post">
+                            <button class="d-flex" style="background: none; border: none; cursor: pointer;" type="submit">
+                                <p class="mt-3">' . $_SESSION["username"] . '</p>
+                                <img src="images/'.$_SESSION["pfp"].'" alt="Default profile photo for an anonymous user" class="ml-2" id="pfp">
+                            </button>
+                          </form>';
+                } else {
+                    echo '<form class="form-inline ml-5" action="?command=login" method="post">
+                            <button class="d-flex" style="background: none; border: none; cursor: pointer;" type="submit">
+                                <p class="mt-3"> Guest </p>
+                                <img src="images/defaultpfp.jpg" alt="Default profile photo for an anonymous user" class="ml-2" id="pfp">
+                            </button>
+                          </form>';
+                }
+                ?>
             </div>
         </nav>
 
@@ -79,8 +105,8 @@
                 <div class="card">
                     <img class="card-img-top" src="https://m.media-amazon.com/images/M/MV5BMTkxNTk1ODcxNl5BMl5BanBnXkFtZTcwMDI1OTMzOQ@@._V1_FMjpg_UX999_.jpg" alt="The Great Gatsby poster">
                     <div class="card-body">
-                      <h5 class="card-title">The Great Gatsby</h5>
-                      <p class="card-text">"The Great Gatsby" is a novel by F. Scott Fitzgerald that explores themes of decadence, idealism, and excess through the story of Jay Gatsby's tragic obsession with rekindling his lost love in the roaring 1920s.</p>
+                      <h5 class="card-title text-light">The Great Gatsby</h5>
+                      <p class="card-text text-light">"The Great Gatsby" is a novel by F. Scott Fitzgerald that explores themes of decadence, idealism, and excess through the story of Jay Gatsby's tragic obsession with rekindling his lost love in the roaring 1920s.</p>
                     </div>
                   </div>
               </div>
@@ -88,8 +114,8 @@
                 <div class="card" >
                     <img class="card-img-top" src="https://m.media-amazon.com/images/M/MV5BMzUzNDM2NzM2MV5BMl5BanBnXkFtZTgwNTM3NTg4OTE@._V1_FMjpg_UY720_.jpg" alt="Lala land poster">
                     <div class="card-body">
-                      <h5 class="card-title">Lala Land</h5>
-                      <p class="card-text">"La La Land" is a vibrant and heartfelt musical film that follows the passionate and bittersweet love story of an aspiring actress and a jazz musician pursuing their dreams in Los Angeles.</p>
+                      <h5 class="card-title text-light">Lala Land</h5>
+                      <p class="card-text text-light">"La La Land" is a vibrant and heartfelt musical film that follows the passionate and bittersweet love story of an aspiring actress and a jazz musician pursuing their dreams in Los Angeles.</p>
                     </div>
                   </div>
               </div>
@@ -97,8 +123,8 @@
                 <div class="card">
                     <img class="card-img-top" src="https://m.media-amazon.com/images/M/MV5BMWYzZTM5ZGQtOGE5My00NmM2LWFlMDEtMGNjYjdmOWM1MzA1XkEyXkFqcGc@._V1_FMjpg_UX878_.jpg" alt="Gladiator II poster">
                     <div class="card-body">
-                      <h5 class="card-title">Gladiator II</h5>
-                      <p class="card-text">"Gladiator II" is a sequel to the epic historical drama "Gladiator," where the story is expected to continue exploring the world of ancient Rome with new characters and a further look into the legacy of Maximus.</p>
+                      <h5 class="card-title text-light">Gladiator II</h5>
+                      <p class="card-text text-light">"Gladiator II" is a sequel to the epic historical drama "Gladiator," where the story is expected to continue exploring the world of ancient Rome with new characters and a further look into the legacy of Maximus.</p>
                     </div>
                   </div>
               </div>
@@ -107,8 +133,8 @@
                 <div class="card">
                     <img class="card-img-top" src="https://m.media-amazon.com/images/M/MV5BYjk1Y2U4MjQtY2ZiNS00OWQyLWI3MmYtZWUwNmRjYWRiNWNhXkEyXkFqcGc@._V1_FMjpg_UY720_.jpg" alt="Parasite poster">
                     <div class="card-body">
-                      <h5 class="card-title">Parasite</h5>
-                      <p class="card-text">"Parasite" is a South Korean dark comedy thriller directed by Bong Joon-ho that delves into class warfare, social inequality, and the disturbing dynamics between two families at opposite ends of the socioeconomic spectrum.</p>
+                      <h5 class="card-title text-light">Parasite</h5>
+                      <p class="card-text text-light">"Parasite" is a South Korean dark comedy thriller directed by Bong Joon-ho that delves into class warfare, social inequality, and the disturbing dynamics between two families at opposite ends of the socioeconomic spectrum.</p>
                     </div>
                   </div>
               </div>
@@ -116,8 +142,8 @@
                 <div class="card bottom-card">
                     <img class="card-img-top" src="https://m.media-amazon.com/images/M/MV5BZDk2YjNhYzEtYzg2ZC00OWEwLWJhYzgtMGUzMWVjNDFmYzI5XkEyXkFqcGc@._V1_FMjpg_UY2664_.jpg" alt="The Hunger Games: The Ballad of Songbirds & Snakes Poster">
                     <div class="card-body">
-                      <h5 class="card-title">The Hunger Games: The Ballad of Songbirds & Snakes</h5>
-                      <p class="card-text">"The Hunger Games: The Ballad of Songbirds & Snakes" is a prequel to the popular Hunger Games series that focuses on the origin story of Coriolanus Snow, decades before he becomes the tyrannical President of Panem.</p>
+                      <h5 class="card-title text-light">The Hunger Games: The Ballad of Songbirds & Snakes</h5>
+                      <p class="card-text text-light">"The Hunger Games: The Ballad of Songbirds & Snakes" is a prequel to the popular Hunger Games series that focuses on the origin story of Coriolanus Snow, decades before he becomes the tyrannical President of Panem.</p>
                     </div>
                   </div>
               </div>
@@ -137,7 +163,7 @@
           <!-- Grid column -->
           <div class="col-md-2">
             <h6 class="text-uppercase font-weight-bold">
-              <a href="home.html" class="text-white">Home</a>
+              <a href="home.php" class="text-white">Home</a>
             </h6>
           </div>
           <!-- Grid column -->
@@ -153,7 +179,7 @@
           <!-- Grid column -->
           <div class="col-md-2">
             <h6 class="text-uppercase font-weight-bold">
-              <a href="userRecommendation.html" class="text-white">Recommendations</a>
+              <a href="userRecommendation.php" class="text-white">Recommendations</a>
             </h6>
           </div>
           <!-- Grid column -->
@@ -161,7 +187,7 @@
           <!-- Grid column -->
           <div class="col-md-2">
             <h6 class="text-uppercase font-weight-bold">
-              <a href="review.html" class="text-white">Review</a>
+              <a href="review.php" class="text-white">Review</a>
             </h6>
           </div>
           <!-- Grid column -->

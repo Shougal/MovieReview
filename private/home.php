@@ -44,18 +44,44 @@
                             <button class="btn btn-link text-light" type="submit">Recommendations</button>
                         </form>
                     </li>
-                    <li class="nav-item active">
-                        <form action="?command=review" method="post">
-                            <button class="btn btn-link text-light" type="submit">Review</button>
-                        </form>
-                    </li>
+                    <?php
+                    if (isset($_SESSION["username"])){
+                        echo '<li class="nav-item active">
+                                <form action="?command=review" method="post">
+                                    <button class="btn btn-link text-light" type="submit">Review</button>
+                                </form>
+                              </li>';
+                    } else {
+                        echo '<li class="nav-item active">
+                                <form action="?command=login" method="post">
+                                    <button class="btn btn-link text-light" type="submit">Login</button>
+                                </form>
+                              </li>';
+                    }
+                    ?>
                 </ul>
 
-                <form class="form-inline my-2 my-lg-0">
+                <form class="form-inline my-2 my-lg-0 mr-auto">
                     <input class="form-control mr-sm-2" type="search" placeholder="Search All Movies" aria-label="Search">
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                 </form>
-                <a href="#"><img src="images/defaultpfp.jpg" alt="Default profile photo for an anonymous user" class="ml-2" id="pfp"></a>
+                <?php
+                if(isset($_SESSION["username"])){
+                    echo '<form class="form-inline ml-5" action="?command=account" method="post">
+                            <button class="d-flex" style="background: none; border: none; cursor: pointer;" type="submit">
+                                <p class="mt-3">' . $_SESSION["username"] . '</p>
+                                <img src="images/'.$_SESSION["pfp"].'" alt="Default profile photo for an anonymous user" class="ml-2" id="pfp">
+                            </button>
+                          </form>';
+                } else {
+                    echo '<form class="form-inline ml-5" action="?command=login" method="post">
+                            <button class="d-flex" style="background: none; border: none; cursor: pointer;" type="submit">
+                                <p class="mt-3"> Guest </p>
+                                <img src="images/defaultpfp.jpg" alt="Default profile photo for an anonymous user" class="ml-2" id="pfp">
+                            </button>
+                          </form>';
+                }
+                ?>
             </div>
         </nav>
 
@@ -70,7 +96,7 @@
                     <div class="col-md-9 pl-5 pr-5 pt-2 pb-2 d-flex flex-column">
                         <div class="row align-items-center">
                             <div class="container col-md-5 m-0 p-0">
-                                <h2>The Dark Knight Rises</h2>
+                                <h2 class="text-light">The Dark Knight Rises</h2>
                             </div>
                             <div class="container col-md-6 m-0 p-0">
                                 <div class="deco-star-rating">
@@ -83,7 +109,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <p>Text about the movie lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Nulla vitae elit libero, a pharetra augue. Nullam id dolor id nibh ultricies vehicula ut id elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</p>
+                            <p class="text-light">Text about the movie lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Nulla vitae elit libero, a pharetra augue. Nullam id dolor id nibh ultricies vehicula ut id elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</p>
                         </div>
                         <div class="row mt-auto mb-2">
                             <div class="col-md-4 pl-0 ml-0">
@@ -107,7 +133,7 @@
                     <div class="col-md-9 pl-5 pr-5 pt-2 pb-2 d-flex flex-column">
                         <div class="row align-items-center">
                             <div class="container col-md-5 m-0 p-0">
-                                <h2>Forrest Gump</h2>
+                                <h2 class="text-light">Forrest Gump</h2>
                             </div>
                             <div class="container col-md-6 m-0 p-0">
                                 <div class="deco-star-rating">
@@ -120,7 +146,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <p>Text about the movie lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Nulla vitae elit libero, a pharetra augue. Nullam id dolor id nibh ultricies vehicula ut id elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</p>
+                            <p class="text-light">Text about the movie lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Nulla vitae elit libero, a pharetra augue. Nullam id dolor id nibh ultricies vehicula ut id elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</p>
                         </div>
                         <div class="row mt-auto mb-2">
                             <div class="col-md-4 pl-0 ml-0">
@@ -144,7 +170,7 @@
                     <div class="col-md-9 pl-5 pr-5 pt-2 pb-2 d-flex flex-column">
                         <div class="row align-items-center">
                             <div class="container col-md-5 m-0 p-0">
-                                <h2>The Emoji Movie</h2>
+                                <h2 class="text-light">The Emoji Movie</h2>
                             </div>
                             <div class="container col-md-6 m-0 p-0">
                                 <div class="deco-star-rating">
@@ -157,7 +183,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <p>Text about the movie lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Nulla vitae elit libero, a pharetra augue. Nullam id dolor id nibh ultricies vehicula ut id elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</p>
+                            <p class="text-light">Text about the movie lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Nulla vitae elit libero, a pharetra augue. Nullam id dolor id nibh ultricies vehicula ut id elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</p>
                         </div>
                         <div class="row mt-auto mb-2">
                             <div class="col-md-4 pl-0 ml-0">
@@ -175,7 +201,7 @@
             <div class="card fav-movie-card m-0 p-0">
                 <div class="row align-items-center">
                     <div class="col-md-6 ml-5 mt-4 mb-1">
-                        <p>Looking to add to your top 3? Revise your ratings or search for new movies!</p>
+                        <p class="text-light">Looking to add to your top 3? Revise your ratings or search for new movies!</p>
                     </div>
                     <div class="col-md-2">
                         <button type="button" class="btn btn-light fav-button">Your Movies</button>
@@ -206,7 +232,7 @@
                         <!-- Grid column -->
                         <div class="col-md-2">
                             <h6 class="text-uppercase font-weight-bold">
-                                <a href="userMovies.html" class="text-white">Your Movies</a>
+                                <a href="userMovies.php" class="text-white">Your Movies</a>
                             </h6>
                         </div>
                         <!-- Grid column -->
@@ -214,7 +240,7 @@
                         <!-- Grid column -->
                         <div class="col-md-2">
                             <h6 class="text-uppercase font-weight-bold">
-                                <a href="userRecommendation.html" class="text-white">Recommendations</a>
+                                <a href="userRecommendation.php" class="text-white">Recommendations</a>
                             </h6>
                         </div>
                         <!-- Grid column -->
@@ -222,7 +248,7 @@
                         <!-- Grid column -->
                         <div class="col-md-2">
                             <h6 class="text-uppercase font-weight-bold">
-                                <a href="review.html" class="text-white">Review</a>
+                                <a href="review.php" class="text-white">Review</a>
                             </h6>
                         </div>
                         <!-- Grid column -->
