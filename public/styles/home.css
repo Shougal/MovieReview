@@ -2,22 +2,6 @@ h1 {
     color: white;
     text-decoration: underline;
 }
-.fav-movie-card {
-    height: fit-content;
-    background-color: dimgray;
-    h2 {
-        font-size: 2rem;
-    }
-    p {
-        font-size: 1rem;
-    }
-    .row {
-        height: 100%;
-        [class^="col"]{
-            height: 100%;
-        }
-    }
-}
 .img-container {
     overflow: hidden;
 }
@@ -29,14 +13,4 @@ h1 {
 }
 .fav-button {
     width: 100%;
-}
-
-.deco-star-rating {
-    font-size: 3rem;
-    color: gold;
-    display: flex;
-    justify-content: end;
-    .unchecked {
-        color: grey;
-    }
 }

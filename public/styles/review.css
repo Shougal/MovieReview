@@ -25,7 +25,7 @@ h1 {
 
 .add-fav-heart{
     font-size: 2rem;
-    color: dimgray;
+    color: lightgray;
     input {
         display: none;
     }
