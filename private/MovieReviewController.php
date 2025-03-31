@@ -62,44 +62,66 @@ class MovieReviewController {
     }
 
     function showUserMovies(){
-        include("/students/qvh7fp/students/qvh7fp/private/sprint3/userMovies.php");
+        include("/opt/src/sprint3/userMovies.php");
     }
     function showRecommendations(){
-        include("/students/qvh7fp/students/qvh7fp/private/sprint3/userRecommendation.php");
+        include("/opt/src/sprint3/userRecommendation.php");
     }
     function showReview(){
-        include("/students/qvh7fp/students/qvh7fp/private/sprint3/review.php");
+        include("/opt/src/sprint3/review.php");
     }
     function showHome(){
-        include("/students/qvh7fp/students/qvh7fp/private/sprint3/home.php");
+        include("/opt/src/sprint3/home.php");
     }
     function showLogin(){
-        include("/students/qvh7fp/students/qvh7fp/private/sprint3/login.php");
+        include("/opt/src/sprint3/login.php");
     }
     function showAccount(){
-        include("/students/qvh7fp/students/qvh7fp/private/sprint3/account.php");
+        include("/opt/src/sprint3/account.php");
     }
     function validateLogin(){
         $_SESSION["message"] = "";
         if(isset($_POST["username"]) && isset($_POST["email"]) && isset($_POST["password"])){
             if(strlen($_POST["username"])<4){
                 $_SESSION["message"] = "Username must be at least 4 characters";
-                $this->showLogin();
+                include("/opt/src/sprint3/login.php");
                 return;
             } else if (!preg_match("/^[a-zA-Z0-9._]+@[a-zA-Z0-9.]+\.[a-zA-Z]{2,}$/", $_POST["email"])) {
                 $_SESSION["message"] = "Invalid Email";
-                $this->showLogin();
+                include("/opt/src/sprint3/login.php");
                 return;
             } else if (strlen($_POST["password"]<8)) {
                 $_SESSION["message"] = "Password must be at least 8 characters";
-                $this->showLogin();
+                include("/opt/src/sprint3/login.php");
                 return;
+            }
+
+            $results = pg_query($this->db, "select * from spr3_users where email = '" . $_POST["email"] . "';");
+            if (pg_num_rows($results) > 0) {
+                $row = pg_fetch_assoc($results);
+                if (!password_verify($_POST["password"], $row["password"])) {
+                    $_SESSION["message"] = "Incorrect Password!";
+                    $this->showLogin();
+                    return;
+                }
+            } else {
+                pg_query($this->db, "insert into spr3_users (name, email, password) values ('".$_POST["username"]."', '". $_POST["email"]."','".password_hash($_POST["password"], PASSWORD_DEFAULT)."');");
             }
             //These will be displayed in navbar so creating a session variable for them will probably be easier
             $_SESSION["username"] = $_POST["username"];
-            $_SESSION["pfp"] = "check.png"; //TODO: Allow users to pick a pfp
-
-            //TODO: Add users to db
+            $_SESSION["email"] = $_POST["email"];
+            $pfp_case = pg_fetch_assoc(pg_query($this->db, "select pfp from spr3_users where name='".$_SESSION["username"]."';"))["pfp"];
+            switch($pfp_case){
+                case "0":
+                    $_SESSION["pfp"] = "bluepfp.jpg";
+                    break;
+                case "1":
+                    $_SESSION["pfp"] = "greenpfp.jpg";
+                    break;
+                case "2":
+                    $_SESSION["pfp"] = "orangepfp.jpg";
+                    break;
+            }
         }
         $this->showHome();
     }

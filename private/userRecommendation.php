@@ -27,7 +27,6 @@
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-light ">
-            <!--TODO: Add actual Logo and image-->
             <p class="navbar-brand ml-0 mt-0 mb-0 mr-4">
                 <img src="images/MR.png" width="30" height="30" class="d-inline-block align-top" alt="">
                 MovieReviews
@@ -78,14 +77,14 @@
                 if(isset($_SESSION["username"])){
                     echo '<form class="form-inline ml-5" action="?command=account" method="post">
                                 <button class="d-flex" style="background: none; border: none; cursor: pointer;" type="submit">
-                                    <p class="mt-3">' . $_SESSION["username"] . '</p>
-                                    <img src="images/'.$_SESSION["pfp"].'" alt="Default profile photo for an anonymous user" class="ml-2" id="pfp">
+                                    <p class="mt-3 text-light">' . $_SESSION["username"] . '</p>
+                                    <img src="images/'.$_SESSION["pfp"].'" alt="Profile photo for the active user" class="ml-2" id="pfp">
                                 </button>
                               </form>';
                 } else {
                     echo '<form class="form-inline ml-5" action="?command=login" method="post">
                                 <button class="d-flex" style="background: none; border: none; cursor: pointer;" type="submit">
-                                    <p class="mt-3"> Guest </p>
+                                    <p class="mt-3 text-light"> Guest </p>
                                     <img src="images/defaultpfp.jpg" alt="Default profile photo for an anonymous user" class="ml-2" id="pfp">
                                 </button>
                               </form>';
@@ -102,7 +101,7 @@
                     </div>
                     <div class="col-md-9 pl-5 pr-5 pt-2 pb-2 d-flex flex-column">
                         <div class="row align-items-center">
-                            <div class="container col-md-5 m-0 p-0">
+                            <div class="container col-md-5 m-0 p-0 text-light">
                                 <h2>Dune</h2>
                             </div>
                             <div class="container col-md-6 m-0 p-0">
@@ -120,7 +119,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row text-light">
                             <p>Text about the movie lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Nulla vitae elit libero, a pharetra augue. Nullam id dolor id nibh ultricies vehicula ut id elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</p>
                         </div>
                         <div class="row mt-auto mb-2">
@@ -144,7 +143,7 @@
                     </div>
                     <div class="col-md-9 pl-5 pr-5 pt-2 pb-2 d-flex flex-column">
                         <div class="row align-items-center">
-                            <div class="container col-md-5 m-0 p-0">
+                            <div class="container col-md-5 m-0 p-0 text-light">
                                 <h2>Captain America: Civil War</h2>
                             </div>
                             <div class="container col-md-6 m-0 p-0">
@@ -162,7 +161,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row text-light">
                             <p>Text about the movie lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Nulla vitae elit libero, a pharetra augue. Nullam id dolor id nibh ultricies vehicula ut id elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</p>
                         </div>
                         <div class="row mt-auto mb-2">
@@ -186,7 +185,7 @@
                     </div>
                     <div class="col-md-9 pl-5 pr-5 pt-2 pb-2 d-flex flex-column">
                         <div class="row align-items-center">
-                            <div class="container col-md-5 m-0 p-0">
+                            <div class="container col-md-5 m-0 p-0 text-light">
                                 <h2>Five Nights at Freddy's</h2>
                             </div>
                             <div class="container col-md-6 m-0 p-0">
@@ -204,7 +203,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row text-light">
                             <p>Text about the movie lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Nulla vitae elit libero, a pharetra augue. Nullam id dolor id nibh ultricies vehicula ut id elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</p>
                         </div>
                         <div class="row mt-auto mb-2">

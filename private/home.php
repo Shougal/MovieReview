@@ -18,7 +18,6 @@
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-light ">
-            <!--TODO: Add actual Logo and image-->
             <p class="navbar-brand ml-0 mt-0 mb-0 mr-4">
                 <img src="images/MR.png" width="30" height="30" class="d-inline-block align-top" alt="">
                 MovieReviews
@@ -69,14 +68,14 @@
                 if(isset($_SESSION["username"])){
                     echo '<form class="form-inline ml-5" action="?command=account" method="post">
                             <button class="d-flex" style="background: none; border: none; cursor: pointer;" type="submit">
-                                <p class="mt-3">' . $_SESSION["username"] . '</p>
-                                <img src="images/'.$_SESSION["pfp"].'" alt="Default profile photo for an anonymous user" class="ml-2" id="pfp">
+                                <p class="mt-3 text-light">' . $_SESSION["username"] . '</p>
+                                <img src="images/'.$_SESSION["pfp"].'" alt="Profile photo for the active user" class="ml-2" id="pfp">
                             </button>
                           </form>';
                 } else {
                     echo '<form class="form-inline ml-5" action="?command=login" method="post">
                             <button class="d-flex" style="background: none; border: none; cursor: pointer;" type="submit">
-                                <p class="mt-3"> Guest </p>
+                                <p class="mt-3 text-light"> Guest </p>
                                 <img src="images/defaultpfp.jpg" alt="Default profile photo for an anonymous user" class="ml-2" id="pfp">
                             </button>
                           </form>';
