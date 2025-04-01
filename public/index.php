@@ -12,7 +12,6 @@ ini_set("display_errors", 1);
 spl_autoload_register(function ($classname) {
 //     include "/students/xdq9qa/students/xdq9qa/private/sprint3/$classname.php";
     include "/opt/src/sprint3/$classname.php";
-    
 });
 
 // Other global things that we need to do

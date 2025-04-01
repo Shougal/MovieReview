@@ -52,6 +52,14 @@ class MovieReviewController {
         }
     }
 
+    function showLogin(){
+        // include("/students/xdq9qa/students/xdq9qa/private/sprint3/templates/login.php");
+        include("/opt/src/sprint3/templates/login.php");
+    }
+    function showAccount(){
+        // include("/students/xdq9qa/students/xdq9qa/private/sprint3/templates/account.php");
+        include("/opt/src/sprint3/templates/account.php");
+    }
     function showUserMovies(){
         // include("/students/xdq9qa/students/xdq9qa/private/sprint3/templates/userMovies.php");
         include("/opt/src/sprint3/templates/userMovies.php");
@@ -94,7 +102,7 @@ class MovieReviewController {
      */  
     private function searchMovies() {
     
-        $query = $_POST['query']?? '';  // Get the search query from input, defaulting to an empty string if not set
+        $query = isset($_GET['query']) ? $_GET['query'] : '';  // Get the search query from input, defaulting to an empty string if not set
         $query = trim($query);  // Trim whitespace
         
         
@@ -139,21 +147,26 @@ class MovieReviewController {
                 return;
             }
 
-            $results = pg_query($this->db, "select * from spr3_users where email = '" . $_POST["email"] . "';");
-            if (pg_num_rows($results) > 0) {
-                $row = pg_fetch_assoc($results);
-                if (!password_verify($_POST["password"], $row["password"])) {
+            $statement = "select * from users_spr3 where email = '" . $_POST["email"] . "';";
+            $results = $this->db->query($statement);
+            unset($statement);
+            if (count($results) > 0) {
+                if (!password_verify($_POST["password"], $results[0]["password"])) {
                     $_SESSION["message"] = "Incorrect Password!";
                     $this->showLogin();
                     return;
                 }
             } else {
-                pg_query($this->db, "insert into spr3_users (name, email, password) values ('".$_POST["username"]."', '". $_POST["email"]."','".password_hash($_POST["password"], PASSWORD_DEFAULT)."');");
+                $statement = "insert into users_spr3 (name, email, password) values ('".$_POST["username"]."', '". $_POST["email"]."','".password_hash($_POST["password"], PASSWORD_DEFAULT)."');";
+                $this->db->query($statement);
+                unset($statement);
             }
             //These will be displayed in navbar so creating a session variable for them will probably be easier
             $_SESSION["username"] = $_POST["username"];
             $_SESSION["email"] = $_POST["email"];
-            $pfp_case = pg_fetch_assoc(pg_query($this->db, "select pfp from spr3_users where name='".$_SESSION["username"]."';"))["pfp"];
+
+            $statement = "select * from users_spr3 where name='".$_SESSION["username"]."';";
+            $pfp_case = $this->db->query($statement)[0]["pfp"];
             switch($pfp_case){
                 case "0":
                     $_SESSION["pfp"] = "bluepfp.jpg";
