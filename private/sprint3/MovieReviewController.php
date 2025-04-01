@@ -9,24 +9,12 @@ class MovieReviewController {
      */
     public function __construct($input) {
         session_start();
-        $this->input = $input;
+        $this->db = new Database();
+        $this->input=$input;
 
-        if(!isset($this->db)){
-            $config = include('Config.php');
-            $this->db = pg_connect("host={$config['host']} port={$config['port']} dbname={$config['database']} user={$config['user']} password={$config['pass']}");
-        }
-        if (!$this->db) {
-            echo "Couldnt connect to DB\n";
-        }
+        
     }
 
-    /**
-     * Run the server
-     *
-     * Given the input (usually $_GET), then it will determine
-     * which command to execute based on the given "command"
-     * parameter.  Default is the welcome page.
-     */
     public function run() {
         $command = "home";
         if (isset($this->input["command"]))
@@ -41,6 +29,9 @@ class MovieReviewController {
                 break;
             case "review":
                 $this->showReview();
+                break;
+            case "search":
+                $this->searchMovies();
                 break;
             case "login":
                 $this->showLogin();
@@ -62,23 +53,75 @@ class MovieReviewController {
     }
 
     function showUserMovies(){
-        include("/opt/src/sprint3/userMovies.php");
+        // include("/students/xdq9qa/students/xdq9qa/private/sprint3/templates/userMovies.php");
+        include("/opt/src/sprint3/templates/userMovies.php");
+        
     }
     function showRecommendations(){
-        include("/opt/src/sprint3/userRecommendation.php");
+        // include("/students/xdq9qa/students/xdq9qa/private/sprint3/templates/userRecommendation.php");
+        include("/opt/src/sprint3/templates/userRecommendation.php");
     }
     function showReview(){
-        include("/opt/src/sprint3/review.php");
+        // include("/students/xdq9qa/students/xdq9qa/private/sprint3/templates/review.php");
+        include("/opt/src/sprint3/templates/review.php");
+        
     }
     function showHome(){
-        include("/opt/src/sprint3/home.php");
+        // include("/students/xdq9qa/students/xdq9qa/private/sprint3/templates/home.php");
+        include("/opt/src/sprint3/templates/home.php");
+        
     }
-    function showLogin(){
-        include("/opt/src/sprint3/login.php");
+
+    /** This shows all movies searched by the user based on query inputted */
+    /** Sprint 3 Functionalities:
+     * 1) Use of Arrays:
+     *  Once the search query is executed using pg_execute, the results are fetched and stored in an array ($movies = [];
+     *  2)  Use of Control Structures:
+     *          Requirement Met: Employ loops for iterating through movie data and conditional statements for filtering search results based on user input.
+     *          Implementation: The function uses conditional statements to check the validity of the user input and to handle the output based on whether the search results are empty or not. It also uses a loop (while ($movie = pg_fetch_assoc($result))) to iterate through each movie in the result set and display its details.
+     *  3) Use of Built-in Functions:   
+     *          trim() to remove whitespace from the user input.
+     *          preg_match() to validate the input against a specific pattern.
+     *          htmlspecialchars() to safely encode HTML special characters from the database output, preventing XSS (Cross-Site Scripting) attacks when displaying movie titles and descriptions.
+     *  4) Form Submission and Handling:
+     *          Requirement Met: Use $_GET for handling search queries submitted through a search form.
+     *          Implementation: The search functionality is triggered by retrieving data sent via $_GET ($query = $this->input['query'] ?? '';
+     *  5) Regular Expression:
+     *          Requirement Met: Utilize regular expressions to validate and sanitize search inputs.
+     *          Implementation: The function uses a regular expression (preg_match("/^[a-zA-Z0-9\s]*$/", $query)) to ensure that the search input only contains alphanumeric characters and spaces. 
+     *  6) Secure Database Interaction:
+     *           By preparing the SQL query with placeholders and executing it with actual parameters (pg_prepare and pg_execute), the function enhances security by separating data handling from SQL code execution, thereby preventing SQL injection attacks.
+     */  
+    private function searchMovies() {
+    
+        $query = $_POST['query']?? '';  // Get the search query from input, defaulting to an empty string if not set
+        $query = trim($query);  // Trim whitespace
+        
+        
+        // Validate the input
+        if (!preg_match("/^[a-zA-Z0-9\s]*$/", $query)) {
+            
+            $_SESSION['search_results'] = "Invalid input. Only alphanumeric characters and spaces are allowed.";
+            // include("/students/xdq9qa/students/xdq9qa/private/sprint3/templates/Search.php");
+            include("/opt/src/sprint3/templates/Search.php");
+            return;
+        }
+    
+        // $searchTerm = '%' . $query . '%';
+        // echo $searchTerm;
+        // SQL query
+        $sql = 'SELECT * FROM movies_spr3 WHERE title ILIKE $1';
+        $movies = $this->db->query($sql, $query);
+
+        if (!empty($movies)) {
+            $_SESSION['search_results'] = $movies;
+        } else {
+            $_SESSION['search_results'] = "No results found for '" . htmlspecialchars($query) . "'.";
+        }
+        // include("/students/xdq9qa/students/xdq9qa/private/sprint3/templates/Search.php");
+        include("/opt/src/sprint3/templates/Search.php");
     }
-    function showAccount(){
-        include("/opt/src/sprint3/account.php");
-    }
+
     function validateLogin(){
         $_SESSION["message"] = "";
         if(isset($_POST["username"]) && isset($_POST["email"]) && isset($_POST["password"])){
