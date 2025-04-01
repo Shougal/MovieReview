@@ -1,8 +1,12 @@
 <!-- Only show if logged in -->
-<?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in']): ?>
+<?php if (isset($_SESSION['email'])): ?>
 <form action="?command=add_movie" method="post">
-    <input type="text" name="title" placeholder="Movie Title" required>
-    <textarea name="description" placeholder="Description"></textarea>
+    <label> Movie Title
+        <input type="text" name="title" id="title" placeholder="Title" required>
+    </label>
+    <label> Description of Movie
+        <textarea name="description" id="description" placeholder="Description"></textarea>
+    </label>
     <button type="submit">Add Movie</button>
 </form>
 <?php endif; ?>

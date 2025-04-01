@@ -46,9 +46,10 @@
                     <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in']): ?>
 
                     <li class="nav-item">
-                        <form action="?command=add_movie" method="post">
+                        <form method="get">
+                            <input type="hidden" name="command" value="add_movie">
                             <button class="btn btn-link text-light" type="submit">Add Movie</button>
-                         </form>
+                        </form>
                     </li>
                     <?php endif; ?>
                     <?php

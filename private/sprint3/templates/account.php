@@ -40,6 +40,12 @@
                     <button class="btn btn-link text-light" type="submit">Recommendations</button>
                 </form>
             </li>
+            <li class="nav-item">
+                <form method="get">
+                    <input type="hidden" name="command" value="add_movie">
+                    <button class="btn btn-link text-light" type="submit">Add Movie</button>
+                </form>
+            </li>
             <?php
             if (isset($_SESSION["username"])){
                 echo '<li class="nav-item active">
