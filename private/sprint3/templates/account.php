@@ -98,15 +98,15 @@
                     <h4>Set your profile picture color</h4>
                     <div class="d-flex" style="gap: 5px;">
                         <label for="blue">
-                            <input type="radio" id="blue" name="choice" value="1" required <?php if ($_SESSION["pfp"]==="bluepfp.jpg") { echo "checked";};?>> Blue
+                            <input type="radio" id="blue" name="choice" value="0" required <?php if ($_SESSION["pfp"]==="bluepfp.jpg") { echo "checked";};?>> Blue
                         </label>
                         <br>
                         <label for="green">
-                            <input type="radio" id="green" name="choice" value="2" <?php if ($_SESSION["pfp"]==="greenpfp.jpg") { echo "checked";};?>> Green
+                            <input type="radio" id="green" name="choice" value="1" <?php if ($_SESSION["pfp"]==="greenpfp.jpg") { echo "checked";};?>> Green
                         </label>
                         <br>
                         <label for="orange">
-                            <input type="radio" id="orange" name="choice" value="3" <?php if ($_SESSION["pfp"]==="orangepfp.jpg") { echo "checked";};?>> Orange
+                            <input type="radio" id="orange" name="choice" value="2" <?php if ($_SESSION["pfp"]==="orangepfp.jpg") { echo "checked";};?>> Orange
                         </label>
                     </div>
                     <button type="submit" class="btn">Submit</button>
