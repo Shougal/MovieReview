@@ -43,6 +43,14 @@
                             <button class="btn btn-link text-light" type="submit">Recommendations</button>
                         </form>
                     </li>
+                    <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in']): ?>
+
+                    <li class="nav-item">
+                        <form action="?command=add_movie" method="post">
+                            <button class="btn btn-link text-light" type="submit">Add Movie</button>
+                         </form>
+                    </li>
+                    <?php endif; ?>
                     <?php
                     if (isset($_SESSION["username"])){
                         echo '<li class="nav-item active">

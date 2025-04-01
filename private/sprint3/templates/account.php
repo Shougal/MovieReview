@@ -94,14 +94,38 @@
                 <div class="col-5 m-auto">
                     <?= "<p class='mt-3'>Username: " . $_SESSION["username"] . "</p>" ?>
                     <?= "<p class='mt-3'>Email: " . $_SESSION["email"] . "</p>" ?>
+                    <form action="?command=set-pfp" method="POST">
+                        <h4>Set your profile picture color</h4>
+                        <div class="d-flex" style="gap: 5px;">
+                            <label for="blue">
+                                <input type="radio" id="option1" name="choice" value="1" required <?php if ($_SESSION["pfp"]==="bluepfp.jpg") { echo "checked";};?>> Blue
+                            </label>
+                            <br>
+                            <label for="green">
+                                <input type="radio" id="option2" name="choice" value="2" <?php if ($_SESSION["pfp"]==="greenpfp.jpg") { echo "checked";};?>> Green
+                            </label>
+                            <br>
+                            <label for="orange">
+                                <input type="radio" id="option3" name="choice" value="3" <?php if ($_SESSION["pfp"]==="orangepfp.jpg") { echo "checked";};?>> Orange
+                            </label>
+                        </div>
+                        <button type="submit" class="btn">Submit</button>
+                    </form>
                     <form action="?command=logout" method="post">
-                        <button type="submit"> Logout</button>
+                        <button type="submit" class="btn-danger mt-4"> Logout</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 
+    <br>
+    <br>
+    <br><br>
+    <br>
+    <br>
+    <br>
+    <br>
     <footer class="text-center text-white">
         <!-- Grid container -->
         <div class="container">

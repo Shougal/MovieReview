@@ -24,6 +24,19 @@ class MovieReviewController {
             case "user_movies":
                 $this->showUserMovies();
                 break;
+            case 'add_movie':
+                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                    $this->addMovie();
+                } else {
+                     // Direct GET requests to add movie form or redirect if not logged in
+                    if(isset($_SESSION['logged_in']) && $_SESSION['logged_in']) {
+                        $this->showAddMovieForm();
+                    } else {
+                         header("Location: ?command=login");
+                        exit;
+                    }
+                }
+                break;
             case "recommendations":
                 $this->showRecommendations();
                 break;
@@ -51,11 +64,35 @@ class MovieReviewController {
             case "db-destroy":
                 $this->destroyDB();
                 break;
+            case "set-pfp":
+                $this->changePfp();
             case "home":
             default:
                 $this->showHome();
                 break;
         }
+    }
+    function changePfp(){
+        if(!isset($_POST["choice"])){
+            $this->showAccount();
+            return;
+        }
+        $pfp_choice = (int) $_POST["choice"];
+        $statement = "UPDATE users_spr3 SET pfp = ".$pfp_choice." WHERE email = '".$_SESSION["email"]."';";
+        $this->db->query($statement);
+        unset($statement);
+        switch($pfp_choice){
+            case "1":
+                $_SESSION["pfp"] = "bluepfp.jpg";
+                break;
+            case "2":
+                $_SESSION["pfp"] = "greenpfp.jpg";
+                break;
+            case "3":
+                $_SESSION["pfp"] = "orangepfp.jpg";
+                break;
+        }
+        $this->showAccount();
     }
     function destroyDB() {
         $this->db->dropTables();
@@ -87,6 +124,9 @@ class MovieReviewController {
         // include("/students/xdq9qa/students/xdq9qa/private/sprint3/templates/home.php");
         include("/opt/src/sprint3/templates/home.php");
         
+    }
+    function showAddMovieForm() {
+        include("/opt/src/sprint3/templates/addMovie.php");  
     }
 
     /** This shows all movies searched by the user based on query inputted */
@@ -174,6 +214,9 @@ class MovieReviewController {
             $_SESSION["username"] = $_POST["username"];
             $_SESSION["email"] = $_POST["email"];
 
+            //Flag that user is logged in:
+            $_SESSION["logged_in"] = true;
+
             
 
             $statement = "select * from users_spr3 where name='".$_SESSION["username"]."';";
@@ -193,6 +236,7 @@ class MovieReviewController {
         $this->showHome();
     }
     function logout(){
+        $_SESSION["logged_in"] = false;
         session_destroy();
         session_start();
         $this->showHome();
@@ -206,6 +250,21 @@ class MovieReviewController {
         }
         header('Content-Type: application/json');
         echo json_encode($movies);
+        exit;
+    }
+
+    function addMovie() {
+        if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in']) {
+            header("Location: ?command=login");
+            exit;
+        }
+    
+        // Collect data from the form submission
+        $title = $_POST['title'];
+        $description = $_POST['description'];
+        $sql = "INSERT INTO movies_spr3 (title, description) VALUES ($1, $2)";
+        $this->db->query($sql, [$title, $description]);
+        header("Location: ?command=home");
         exit;
     }
     
