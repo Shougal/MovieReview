@@ -45,8 +45,12 @@ class MovieReviewController {
             case "account":
                 $this->showAccount();
                 break;
+            case "api_get_movies":
+                $this->getMoviesAsJson();
+                break;
             case "db-destroy":
                 $this->destroyDB();
+                break;
             case "home":
             default:
                 $this->showHome();
@@ -191,4 +195,16 @@ class MovieReviewController {
         session_start();
         $this->showHome();
     }
+
+    // The following gets all movies as json
+    public function getMoviesAsJson() {
+        $movies = $this->db->query("SELECT * FROM movies_spr3");
+        if(empty($movies)){
+            echo "no movies";
+        }
+        header('Content-Type: application/json');
+        echo json_encode($movies);
+        exit;
+    }
+    
 }
