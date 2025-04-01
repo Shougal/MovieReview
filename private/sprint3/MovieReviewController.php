@@ -144,15 +144,15 @@ class MovieReviewController {
         if(isset($_POST["username"]) && isset($_POST["email"]) && isset($_POST["password"])){
             if(strlen($_POST["username"])<4){
                 $_SESSION["message"] = "Username must be at least 4 characters";
-                include("/opt/src/sprint3/login.php");
+                include("/opt/src/sprint3/templates/login.php");
                 return;
             } else if (!preg_match("/^[a-zA-Z0-9._]+@[a-zA-Z0-9.]+\.[a-zA-Z]{2,}$/", $_POST["email"])) {
                 $_SESSION["message"] = "Invalid Email";
-                include("/opt/src/sprint3/login.php");
+                include("/opt/src/sprint3/templates/login.php");
                 return;
             } else if (strlen($_POST["password"]<8)) {
                 $_SESSION["message"] = "Password must be at least 8 characters";
-                include("/opt/src/sprint3/login.php");
+                include("/opt/src/sprint3/templates/login.php");
                 return;
             }
 
