@@ -28,11 +28,11 @@ class MovieReviewController {
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $this->addMovie();
                 } else {
-                     // Direct GET requests to add movie form or redirect if not logged in
+                    // Direct GET requests to add movie form or redirect if not logged in
                     if(isset($_SESSION['logged_in']) && $_SESSION['logged_in']) {
                         $this->showAddMovieForm();
                     } else {
-                         header("Location: ?command=login");
+                        header("Location: ?command=login");
                         exit;
                     }
                 }
