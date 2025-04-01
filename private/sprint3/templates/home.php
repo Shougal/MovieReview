@@ -43,42 +43,52 @@
                             <button class="btn btn-link text-light" type="submit">Recommendations</button>
                         </form>
                     </li>
+                    <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in']): ?>
+
+                    <li class="nav-item">
+                        <form method="get">
+                            <input type="hidden" name="command" value="add_movie">
+                            <button class="btn btn-link text-light" type="submit">Add Movie</button>
+                        </form>
+                    </li>
+                    <?php endif; ?>
                     <?php
                     if (isset($_SESSION["username"])){
                         echo '<li class="nav-item active">
-                                <form action="?command=review" method="post">
-                                    <button class="btn btn-link text-light" type="submit">Review</button>
-                                </form>
-                              </li>';
+                                            <form action="?command=review" method="post">
+                                                <button class="btn btn-link text-light" type="submit">Review</button>
+                                            </form>
+                                          </li>';
                     } else {
                         echo '<li class="nav-item active">
-                                <form action="?command=login" method="post">
-                                    <button class="btn btn-link text-light" type="submit">Login</button>
-                                </form>
-                              </li>';
+                                            <form action="?command=login" method="post">
+                                                <button class="btn btn-link text-light" type="submit">Login</button>
+                                            </form>
+                                          </li>';
                     }
                     ?>
                 </ul>
 
-                <form class="form-inline my-2 my-lg-0 mr-auto">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search All Movies" aria-label="Search">
+                <form class="form-inline my-2 my-lg-0 mr-auto" method="get">
+                    <input type="hidden" name="command" value="search">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search All Movies" aria-label="Search" name="query">
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                 </form>
                 <?php
                 if(isset($_SESSION["username"])){
                     echo '<form class="form-inline ml-5" action="?command=account" method="post">
-                            <button class="d-flex" style="background: none; border: none; cursor: pointer;" type="submit">
-                                <p class="mt-3 text-light">' . $_SESSION["username"] . '</p>
-                                <img src="images/'.$_SESSION["pfp"].'" alt="Profile photo for the active user" class="ml-2" id="pfp">
-                            </button>
-                          </form>';
+                                        <button class="d-flex" style="background: none; border: none; cursor: pointer;" type="submit">
+                                            <p class="mt-3 text-light">' . $_SESSION["username"] . '</p>
+                                            <img src="images/'.$_SESSION["pfp"].'" alt="Profile photo for the active user" class="ml-2" id="pfp">
+                                        </button>
+                                      </form>';
                 } else {
                     echo '<form class="form-inline ml-5" action="?command=login" method="post">
-                            <button class="d-flex" style="background: none; border: none; cursor: pointer;" type="submit">
-                                <p class="mt-3 text-light"> Guest </p>
-                                <img src="images/defaultpfp.jpg" alt="Default profile photo for an anonymous user" class="ml-2" id="pfp">
-                            </button>
-                          </form>';
+                                        <button class="d-flex" style="background: none; border: none; cursor: pointer;" type="submit">
+                                            <p class="mt-3 text-light"> Guest </p>
+                                            <img src="images/defaultpfp.jpg" alt="Default profile photo for an anonymous user" class="ml-2" id="pfp">
+                                        </button>
+                                      </form>';
                 }
                 ?>
             </div>
