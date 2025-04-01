@@ -9,15 +9,10 @@ class MovieReviewController {
      */
     public function __construct($input) {
         session_start();
-        $this->input = $input;
+        $this->db = new Database();
+        $this->input=$input;
 
-        if(!isset($this->db)){
-            $config = include('Config.php');
-            $this->db = pg_connect("host={$config['host']} port={$config['port']} dbname={$config['database']} user={$config['user']} password={$config['pass']}");
-        }
-        if (!$this->db) {
-            echo "Couldnt connect to DB\n";
-        }
+        
     }
 
    
@@ -55,16 +50,23 @@ class MovieReviewController {
     }
 
     function showUserMovies(){
-        include("/students/qvh7fp/students/qvh7fp/private/sprint3/userMovies.html");
+        // include("/students/xdq9qa/students/xdq9qa/private/sprint3/templates/userMovies.php");
+        include("/opt/src/sprint3/templates/userMovies.php");
+        
     }
     function showRecommendations(){
-        include("/students/qvh7fp/students/qvh7fp/private/sprint3/userRecommendation.html");
+        // include("/students/xdq9qa/students/xdq9qa/private/sprint3/templates/userRecommendation.php");
+        include("/opt/src/sprint3/templates/userRecommendation.php");
     }
     function showReview(){
-        include("/students/qvh7fp/students/qvh7fp/private/sprint3/review.html");
+        // include("/students/xdq9qa/students/xdq9qa/private/sprint3/templates/review.php");
+        include("/opt/src/sprint3/templates/review.php");
+        
     }
     function showHome(){
-        include("/students/qvh7fp/students/qvh7fp/private/sprint3/home.html");
+        // include("/students/xdq9qa/students/xdq9qa/private/sprint3/templates/home.php");
+        include("/opt/src/sprint3/templates/home.php");
+        
     }
 
     /** This shows all movies searched by the user based on query inputted */
@@ -88,33 +90,31 @@ class MovieReviewController {
      *           By preparing the SQL query with placeholders and executing it with actual parameters (pg_prepare and pg_execute), the function enhances security by separating data handling from SQL code execution, thereby preventing SQL injection attacks.
      */  
     private function searchMovies() {
-        $query = $this->input['query'] ?? '';  // Get the search query from input, defaulting to an empty string if not set
+        $query = $_POST['query']?? '';  // Get the search query from input, defaulting to an empty string if not set
         $query = trim($query);  // Trim whitespace
-    
-        // Validate the input to ensure it only contains letters, numbers, and spaces
+        
+        // Validate the input
         if (!preg_match("/^[a-zA-Z0-9\s]*$/", $query)) {
-            echo "Invalid input. Only alphanumeric characters and spaces are allowed.";
+            
+            $_SESSION['search_results'] = "Invalid input. Only alphanumeric characters and spaces are allowed.";
+            // include("/students/xdq9qa/students/xdq9qa/private/sprint3/templates/Search.php");
+            include("/opt/src/sprint3/templates/Search.php");
             return;
         }
     
-        // SQL query to search the movies table. Use parameterized queries to prevent SQL injection
-        $result = pg_prepare($this->db, "search_query", 'SELECT * FROM spr3_movies WHERE title ILIKE $1 OR description ILIKE $1');
-        $result = pg_execute($this->db, "search_query", array("%$query%"));
-    
-        if ($result) {
-            $found = pg_num_rows($result);
-            if ($found > 0) {
-                echo "<h1>Search Results</h1>";
-                while ($movie = pg_fetch_assoc($result)) {
-                    echo "<div><h2>" . htmlspecialchars($movie['title']) . "</h2>";
-                    echo "<p>" . htmlspecialchars($movie['description']) . "</p></div>";
-                }
-            } else {
-                echo "No results found for '" . htmlspecialchars($query) . "'.";
-            }
-        } else {
-            echo "An error occurred with the search.";
-        }
+        // SQL query
+        $sql = 'SELECT * FROM movies_spr3 WHERE title ILIKE $1 OR description ILIKE $1';
+        $movies = $this->db->query($sql, ["%$query%"]);
+
+    if (!empty($movies)) {
+        
+        $_SESSION['search_results'] = $movies;
+    } else {
+        
+        $_SESSION['search_results'] = "No results found for '" . htmlspecialchars($query) . "'.";
+    }
+        // include("/students/xdq9qa/students/xdq9qa/private/sprint3/templates/Search.php");
+        include("/opt/src/sprint3/templates/Search.php");
     }
     
 }

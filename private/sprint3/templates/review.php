@@ -50,15 +50,11 @@
                 </li>
             </ul>
 
-            <!-- <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search All Movies" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form> -->
-            <form class="form-inline my-2 my-lg-0" action="index.php" method="get">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search All Movies" aria-label="Search" name="query">
-                <input type="hidden" name="command" value="search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
+            <form class="form-inline my-2 my-lg-0" action="?command=search" method="post">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search All Movies" aria-label="Search" name="query">
+    
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
             <a href="#"><img src="images/defaultpfp.jpg" alt="Default profile photo for an anonymous user" class="ml-2" id="pfp"></a>
         </div>
     </nav>

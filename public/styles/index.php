@@ -10,7 +10,9 @@ ini_set("display_errors", 1);
 // that Apache does not serve publicly.  They will be in /opt/src/, which
 // is our src/ directory in Docker.
 spl_autoload_register(function ($classname) {
-    include "/students/qvh7fp/students/qvh7fp/private/sprint3/$classname.php";
+//     include "/students/xdq9qa/students/xdq9qa/private/sprint3/$classname.php";
+    include "/opt/src/sprint3/$classname.php";
+    
 });
 
 // Other global things that we need to do
@@ -20,3 +22,7 @@ $controller = new MovieReviewController($_GET);
 
 // Run the controller
 $controller ->run();
+
+
+
+
