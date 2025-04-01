@@ -174,6 +174,8 @@ class MovieReviewController {
             $_SESSION["username"] = $_POST["username"];
             $_SESSION["email"] = $_POST["email"];
 
+            
+
             $statement = "select * from users_spr3 where name='".$_SESSION["username"]."';";
             $pfp_case = $this->db->query($statement)[0]["pfp"];
             switch($pfp_case){
