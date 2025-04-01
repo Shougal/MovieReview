@@ -45,11 +45,16 @@ class MovieReviewController {
             case "account":
                 $this->showAccount();
                 break;
+            case "db-destroy":
+                $this->destroyDB();
             case "home":
             default:
                 $this->showHome();
                 break;
         }
+    }
+    function destroyDB() {
+        $this->db->dropTables();
     }
 
     function showLogin(){
