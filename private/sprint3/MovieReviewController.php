@@ -82,13 +82,13 @@ class MovieReviewController {
         $this->db->query($statement);
         unset($statement);
         switch($pfp_choice){
-            case "1":
+            case "0":
                 $_SESSION["pfp"] = "bluepfp.jpg";
                 break;
-            case "2":
+            case "1":
                 $_SESSION["pfp"] = "greenpfp.jpg";
                 break;
-            case "3":
+            case "2":
                 $_SESSION["pfp"] = "orangepfp.jpg";
                 break;
         }
@@ -124,9 +124,6 @@ class MovieReviewController {
         // include("/students/xdq9qa/students/xdq9qa/private/sprint3/templates/home.php");
         include("/opt/src/sprint3/templates/home.php");
         
-    }
-    function showAddMovieForm() {
-        include("/opt/src/sprint3/templates/addMovie.php");  
     }
 
     /** This shows all movies searched by the user based on query inputted */
@@ -214,11 +211,6 @@ class MovieReviewController {
             $_SESSION["username"] = $_POST["username"];
             $_SESSION["email"] = $_POST["email"];
 
-            //Flag that user is logged in:
-            $_SESSION["logged_in"] = true;
-
-            
-
             $statement = "select * from users_spr3 where name='".$_SESSION["username"]."';";
             $pfp_case = $this->db->query($statement)[0]["pfp"];
             switch($pfp_case){
@@ -236,7 +228,6 @@ class MovieReviewController {
         $this->showHome();
     }
     function logout(){
-        $_SESSION["logged_in"] = false;
         session_destroy();
         session_start();
         $this->showHome();
@@ -252,13 +243,12 @@ class MovieReviewController {
         echo json_encode($movies);
         exit;
     }
-
     function addMovie() {
         if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in']) {
             header("Location: ?command=login");
             exit;
         }
-    
+
         // Collect data from the form submission
         $title = $_POST['title'];
         $description = $_POST['description'];
@@ -267,5 +257,4 @@ class MovieReviewController {
         header("Location: ?command=home");
         exit;
     }
-    
 }
