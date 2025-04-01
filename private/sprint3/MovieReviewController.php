@@ -90,8 +90,10 @@ class MovieReviewController {
      *           By preparing the SQL query with placeholders and executing it with actual parameters (pg_prepare and pg_execute), the function enhances security by separating data handling from SQL code execution, thereby preventing SQL injection attacks.
      */  
     private function searchMovies() {
+    
         $query = $_POST['query']?? '';  // Get the search query from input, defaulting to an empty string if not set
         $query = trim($query);  // Trim whitespace
+        
         
         // Validate the input
         if (!preg_match("/^[a-zA-Z0-9\s]*$/", $query)) {
@@ -102,9 +104,11 @@ class MovieReviewController {
             return;
         }
     
+        // $searchTerm = '%' . $query . '%';
+        // echo $searchTerm;
         // SQL query
-        $sql = 'SELECT * FROM movies_spr3 WHERE title ILIKE $1 OR description ILIKE $1';
-        $movies = $this->db->query($sql, ["%$query%"]);
+        $sql = 'SELECT * FROM movies_spr3 WHERE title ILIKE $1';
+        $movies = $this->db->query($sql, $query);
 
     if (!empty($movies)) {
         
