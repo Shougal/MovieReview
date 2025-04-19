@@ -29,10 +29,11 @@ class MovieReviewController {
                     $this->addMovie();
                 } else {
                     // Direct GET requests to add movie form or redirect if not logged in
-                    if(isset($_SESSION['logged_in']) && $_SESSION['logged_in']) {
+                    if(isset($_SESSION['email'])) {
                         $this->showAddMovieForm();
                     } else {
                         header("Location: ?command=login");
+                        $_SESSION['message'] = "You are not logged in";
                         exit;
                     }
                 }
@@ -99,31 +100,35 @@ class MovieReviewController {
     }
 
     function showLogin(){
-        // include("/students/xdq9qa/students/xdq9qa/private/sprint3/templates/login.php");
-        include("/opt/src/sprint3/templates/login.php");
+        // include("/opt/src/sprint3/templates/login.php");
+        include("/students/qvh7fp/students/qvh7fp/private/sprint3/templates/login.php");
     }
     function showAccount(){
-        // include("/students/xdq9qa/students/xdq9qa/private/sprint3/templates/account.php");
-        include("/opt/src/sprint3/templates/account.php");
+        // include("/opt/src/sprint3/templates/account.php");
+        include("/students/qvh7fp/students/qvh7fp/private/sprint3/templates/account.php");
     }
     function showUserMovies(){
-        // include("/students/xdq9qa/students/xdq9qa/private/sprint3/templates/userMovies.php");
-        include("/opt/src/sprint3/templates/userMovies.php");
+        // include("/opt/src/sprint3/templates/userMovies.php");
+        include("/students/qvh7fp/students/qvh7fp/private/sprint3/templates/userMovies.php");
         
     }
     function showRecommendations(){
-        // include("/students/xdq9qa/students/xdq9qa/private/sprint3/templates/userRecommendation.php");
-        include("/opt/src/sprint3/templates/userRecommendation.php");
+        // include("/opt/src/sprint3/templates/userRecommendation.php");
+        include("/students/qvh7fp/students/qvh7fp/private/sprint3/templates/userRecommendation.php");
     }
     function showReview(){
-        // include("/students/xdq9qa/students/xdq9qa/private/sprint3/templates/review.php");
-        include("/opt/src/sprint3/templates/review.php");
+        // include("/opt/src/sprint3/templates/review.php");
+        include("/students/qvh7fp/students/qvh7fp/private/sprint3/templates/review.php");
         
     }
-    function showHome(){
-        // include("/students/xdq9qa/students/xdq9qa/private/sprint3/templates/home.php");
-        include("/opt/src/sprint3/templates/home.php");
+    function showHome(){\
+        // include("/opt/src/sprint3/templates/home.php");
+        include("/students/qvh7fp/students/qvh7fp/private/sprint3/templates/home.php");
         
+    }
+    function showAddMovieForm() {
+        // include("/opt/src/sprint3/templates/addMovie.php");
+        include("/students/qvh7fp/students/qvh7fp/private/sprint3/templates/addMovie.php");
     }
 
     /** This shows all movies searched by the user based on query inputted */
@@ -156,8 +161,8 @@ class MovieReviewController {
         if (!preg_match("/^[a-zA-Z0-9\s]*$/", $query)) {
             
             $_SESSION['search_results'] = "Invalid input. Only alphanumeric characters and spaces are allowed.";
-            // include("/students/xdq9qa/students/xdq9qa/private/sprint3/templates/Search.php");
-            include("/opt/src/sprint3/templates/Search.php");
+            // include("/opt/src/sprint3/templates/Search.php");
+            include("/students/qvh7fp/students/qvh7fp/private/sprint3/templates/Search.php");
             return;
         }
     
@@ -172,8 +177,8 @@ class MovieReviewController {
         } else {
             $_SESSION['search_results'] = "No results found for '" . htmlspecialchars($query) . "'.";
         }
-        // include("/students/xdq9qa/students/xdq9qa/private/sprint3/templates/Search.php");
-        include("/opt/src/sprint3/templates/Search.php");
+        // include("/opt/src/sprint3/templates/Search.php");
+        include("/students/qvh7fp/students/qvh7fp/private/sprint3/templates/Search.php");
     }
 
     function validateLogin(){
@@ -181,15 +186,18 @@ class MovieReviewController {
         if(isset($_POST["username"]) && isset($_POST["email"]) && isset($_POST["password"])){
             if(strlen($_POST["username"])<4){
                 $_SESSION["message"] = "Username must be at least 4 characters";
-                include("/opt/src/sprint3/templates/login.php");
+                // include("/opt/src/sprint3/templates/login.php");
+                include("/students/qvh7fp/students/qvh7fp/private/sprint3/templates/login.php");
                 return;
             } else if (!preg_match("/^[a-zA-Z0-9._]+@[a-zA-Z0-9.]+\.[a-zA-Z]{2,}$/", $_POST["email"])) {
                 $_SESSION["message"] = "Invalid Email";
-                include("/opt/src/sprint3/templates/login.php");
+                // include("/opt/src/sprint3/templates/login.php");
+                include("/students/qvh7fp/students/qvh7fp/private/sprint3/templates/login.php");
                 return;
             } else if (strlen($_POST["password"]<8)) {
                 $_SESSION["message"] = "Password must be at least 8 characters";
-                include("/opt/src/sprint3/templates/login.php");
+                // include("/opt/src/sprint3/templates/login.php");
+                include("/students/qvh7fp/students/qvh7fp/private/sprint3/templates/login.php");
                 return;
             }
 
@@ -211,6 +219,9 @@ class MovieReviewController {
             $_SESSION["username"] = $_POST["username"];
             $_SESSION["email"] = $_POST["email"];
 
+            //Flag that user is logged in:
+            $_SESSION["logged_in"] = true;
+
             $statement = "select * from users_spr3 where name='".$_SESSION["username"]."';";
             $pfp_case = $this->db->query($statement)[0]["pfp"];
             switch($pfp_case){
@@ -228,6 +239,7 @@ class MovieReviewController {
         $this->showHome();
     }
     function logout(){
+        $_SESSION["logged_in"] = false;
         session_destroy();
         session_start();
         $this->showHome();
@@ -243,8 +255,9 @@ class MovieReviewController {
         echo json_encode($movies);
         exit;
     }
+
     function addMovie() {
-        if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in']) {
+        if (!isset($_SESSION['email'])) {
             header("Location: ?command=login");
             exit;
         }

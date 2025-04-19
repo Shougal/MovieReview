@@ -8,10 +8,10 @@ class Config {
     //     "database" => "xdq9qa"
     // ];
         public static $db = [
-        "host" => "db",
+        "host" => "localhost",
         "port" => 5432,
-        "user" => "localuser",
-        "pass" => "cs4640LocalUser!",
-        "database" => "example"
+        "user" => "qvh7fp",
+        "pass" => "Kbwyi-sGtx8v",
+        "database" => "qvh7fp"
     ];
 }

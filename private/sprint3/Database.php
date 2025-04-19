@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Database class for handling PostgreSQL database operations.
  */
