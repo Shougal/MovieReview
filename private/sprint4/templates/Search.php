@@ -97,7 +97,7 @@
                 foreach ($_SESSION['search_results'] as $movie) {
 
                     echo "<div><h2>" . htmlspecialchars($movie['title']) . "</h2>";
-                    echo "<p>" . htmlspecialchars($movie['description']) . "</p></div>";
+                    echo "<p>" . htmlspecialchars($movie['bio']) . "</p></div>";
                 }
             } else {
                 echo "<p>" . $_SESSION['search_results'] . "</p>";

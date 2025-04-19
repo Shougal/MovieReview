@@ -5,7 +5,7 @@
         <input type="text" name="title" id="title" placeholder="Title" required>
     </label>
     <label> Description of Movie
-        <textarea name="description" id="description" placeholder="Description"></textarea>
+        <textarea name="bio" id="bio" placeholder="Description"></textarea>
     </label>
     <button type="submit">Add Movie</button>
 </form>
