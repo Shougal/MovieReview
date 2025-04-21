@@ -1,0 +1,16 @@
+div > img {
+    width: 100%;
+    height: auto;
+}
+.card {
+    background-color: #161616;
+}
+.deco-star-rating {
+    font-size: 2rem;
+    color: gold;
+    display: flex;
+    justify-content: end;
+    .unchecked {
+        color: grey;
+    }
+}

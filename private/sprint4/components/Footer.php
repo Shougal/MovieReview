@@ -7,35 +7,47 @@
             <div class="row text-center d-flex justify-content-center pt-5">
                 <!-- Grid column -->
                 <div class="col-md-2">
-                    <h6 class="text-uppercase font-weight-bold">
-                        <a href="home.html" class="text-white">Home</a>
-                    </h6>
+                    <form action="?command=home" method="post">
+                        <button class="btn btn-link text-light font-weight-bold" type="submit">HOME</button>
+                    </form>
+                </div>
+                <!-- Grid column -->
+
+                <!-- Grid column -->
+                <?php
+                if (isset($_SESSION["username"])){
+                    echo '<div class="col-md-2">
+                    <form action="?command=user_movies" method="post">
+                        <button class="btn btn-link text-light font-weight-bold" type="submit">YOUR MOVIES</button>
+                    </form>
                 </div>
                 <!-- Grid column -->
 
                 <!-- Grid column -->
                 <div class="col-md-2">
-                    <h6 class="text-uppercase font-weight-bold">
-                        <a href="userMovies.php" class="text-white">Your Movies</a>
-                    </h6>
+                    <form action="?command=recommendations" method="post">
+                        <button class="btn btn-link text-light font-weight-bold" type="submit">RECOMMENDATIONS</button>
+                    </form>
                 </div>
                 <!-- Grid column -->
 
                 <!-- Grid column -->
                 <div class="col-md-2">
-                    <h6 class="text-uppercase font-weight-bold">
-                        <a href="userRecommendation.php" class="text-white">Recommendations</a>
-                    </h6>
+                    <form action="?command=search" method="post">
+                        <input type="hidden" name="reviewing" value="true">
+                        <button class="btn btn-link text-light font-weight-bold" type="submit">REVIEW</button>
+                    </form>
                 </div>
-                <!-- Grid column -->
+                <!-- Grid column -->';
+                } else {
+                    echo '<div class="col-md-2">
+                    <form action="?command=login" method="post">
+                        <button class="btn btn-link text-light font-weight-bold" type="submit">LOGIN</button>
+                    </form>
+                </div>';
+                }
+                ?>
 
-                <!-- Grid column -->
-                <div class="col-md-2">
-                    <h6 class="text-uppercase font-weight-bold">
-                        <a href="review.php" class="text-white">Review</a>
-                    </h6>
-                </div>
-                <!-- Grid column -->
             </div>
             <!-- Grid row-->
         </section>
@@ -87,7 +99,6 @@
         <a class="text-white" href="https://mdbootstrap.com/">ShougandRobMovieReviews.com</a>
     </div>
 </footer>
-
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

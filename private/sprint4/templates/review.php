@@ -13,31 +13,60 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link rel="stylesheet" href="styles/review.css">
         <link rel="stylesheet" href="styles/shared.css">
+
+        <script src="/qvh7fp/sprint4/js/custom.js"></script>
+        <script src="/qvh7fp/sprint4/js/submitReview.js"></script>
+        <style id="theme"></style>
     </head>
     <body>
         <?php
-        include("/students/qvh7fp/students/qvh7fp/private/sprint4/components/Navbar.php");
-        // include("/opt/src/sprint4/components/Navbar.php");
+            include("/students/qvh7fp/students/qvh7fp/private/sprint4/components/Navbar.php");
+          ///include("/opt/src/sprint4/components/Navbar.php");
+        ?>
+        <?php
+            $sql = "SELECT * FROM movies_final WHERE title = '".$_POST["title"]."';";
+            $movie = $this->db->query($sql)[0];
+            $sql = "SELECT * FROM reviews_final WHERE movie_id = '".$movie['id']."';";
+            $review = $this->db->query($sql);
+            $review_found = false;
+            if(sizeof($review) == 0 || isset($_POST['overwrite'])){
+                $review = array(
+                    "review" => "",
+                    "overall" => -1,
+                    "feel_good" => -1,
+                    "suspense" => -1,
+                    "thrill" => -1,
+                    "scare" => -1,
+                    "romance" => -1,
+                    "acting" => -1,
+                    "pacing" => -1,
+                    "rewatch" => -1,
+                    "cinema" => -1,
+                );
+            } else {
+                $review_found = true;
+                $review = $review[0];
+            }
         ?>
 
         <div class="container-xxl">
-            <div class="row justify-content-between">
+            <div id="message"></div>
+            <form class="row justify-content-between" action="?command=leave-review" id="review-form" method="post">
+                <input type="hidden" value="<?= $movie['title']?> " name="title">
                 <div class="col-xl-5 mx-auto">
                     <div class="row align-items-center justify-content-center mx-auto">
                         <h1>Movie Title</h1>
-                        <form action="#" method="POST">
-                            <div class="add-fav-heart ml-3 mt-1">
-                                <input type="checkbox" id="heart-btn"><label for="heart-btn" class="d-flex align-items-center">&#9825; <span class="heart-txt ml-1">Favorite</span></label>
-                            </div>
-                        </form>
+                        <div class="add-fav-heart ml-3 mt-1" id="favorite">
+                            <input type="checkbox" id="fav"><label for="fav" class="d-flex align-items-center">&#9825; <span class="heart-txt ml-1">Favorite</span></label>
+                        </div>
                     </div>
                     <div class="row justify-content-center">
-                        <img src="images/darkknight.jpg" alt="Dark knight thumbnail" style="width: 100%;">
+                        <img src="<?= $movie['thumbnail_url']?>" alt="<?= $movie['title']?> thumbnail" style="width: 100%; max-height: 30rem; object-fit: cover; object-position: center;">
                     </div>
                     <div class="row mt-2">
                         <div class="form-group col-12 pr-4 text-light">
-                            <h6><label for="review-text-area"> Leave a Review: </label></h6>
-                            <textarea class="form-control mr-2" id="review-text-area" rows="7" placeholder="(Optional)"></textarea>
+                            <h6><label for="review"> Leave a Review: </label></h6>
+                            <textarea class="form-control mr-2" id="review" name="review" rows="7" placeholder="(Optional)"><?= $review["review"] ?></textarea>
                         </div>
                     </div>
                 </div>
@@ -47,15 +76,12 @@
                             <h2> Overall: </h2>
                         </div>
                         <div class="row justify-content-center">
-                            <form action="#" method="POST">
-                                <div class="star-rating">
-                                    <input type="checkbox" id="star1"><label for="star1">&#9733;</label>
-                                    <input type="checkbox" id="star2"><label for="star2">&#9733;</label>
-                                    <input type="checkbox" id="star3"><label for="star3">&#9733;</label>
-                                    <input type="checkbox" id="star4"><label for="star4">&#9733;</label>
-                                    <input type="checkbox" id="star5"><label for="star5">&#9733;</label>
-                                </div>
-                            </form>
+                            <?php
+                                $star = 0;
+                                $category = $review['overall'];
+                                include("/students/qvh7fp/students/qvh7fp/private/sprint4/components/RatingStars.php");
+                              ///include("/opt/src/sprint4/components/RatingStars.php");
+                            ?>
                         </div>
                     </div>
                     <div class="mood-rating">
@@ -66,29 +92,23 @@
                             <div class="col-sm-6 d-flex justify-content-center">
                                 <div class="row align-items-center">
                                     <p class="mr-2">Feel Good:</p>
-                                    <form action="#" method="POST" class="d-flex">
-                                        <div class="star-rating mb-2">
-                                            <input type="checkbox" id="star6"><label for="star6">&#9733;</label>
-                                            <input type="checkbox" id="star7"><label for="star7">&#9733;</label>
-                                            <input type="checkbox" id="star8"><label for="star8">&#9733;</label>
-                                            <input type="checkbox" id="star9"><label for="star9">&#9733;</label>
-                                            <input type="checkbox" id="starA"><label for="starA">&#9733;</label>
-                                        </div>
-                                    </form>
+                                    <?php
+                                        $star = 5;
+                                        $category = $review['feel_good'];
+                                        include("/students/qvh7fp/students/qvh7fp/private/sprint4/components/RatingStars.php");
+                                      ///include("/opt/src/sprint4/components/RatingStars.php");
+                                    ?>
                                 </div>
                             </div>
                             <div class="col-sm-6 d-flex justify-content-center">
                                 <div class="row align-items-center">
                                     <p class="mr-2">Suspense:</p>
-                                    <form action="#" method="POST">
-                                        <div class="star-rating mb-2">
-                                            <input type="checkbox" id="starB"><label for="starB">&#9733;</label>
-                                            <input type="checkbox" id="starC"><label for="starC">&#9733;</label>
-                                            <input type="checkbox" id="starD"><label for="starD">&#9733;</label>
-                                            <input type="checkbox" id="starE"><label for="starE">&#9733;</label>
-                                            <input type="checkbox" id="starF"><label for="starF">&#9733;</label>
-                                        </div>
-                                    </form>
+                                    <?php
+                                        $star = 10;
+                                        $category = $review['suspense'];
+                                        include("/students/qvh7fp/students/qvh7fp/private/sprint4/components/RatingStars.php");
+                                      ///include("/opt/src/sprint4/components/RatingStars.php");
+                                    ?>
                                 </div>
                             </div>
                         </div>
@@ -96,44 +116,35 @@
                             <div class="col-sm-6 d-flex justify-content-center">
                                 <div class="row align-items-center">
                                     <p class="mr-2">Thrill:</p>
-                                    <form action="#" method="POST">
-                                        <div class="star-rating mb-2">
-                                            <input type="checkbox" id="star10"><label for="star10">&#9733;</label>
-                                            <input type="checkbox" id="star11"><label for="star11">&#9733;</label>
-                                            <input type="checkbox" id="star12"><label for="star12">&#9733;</label>
-                                            <input type="checkbox" id="star13"><label for="star13">&#9733;</label>
-                                            <input type="checkbox" id="star14"><label for="star14">&#9733;</label>
-                                        </div>
-                                    </form>
+                                    <?php
+                                        $star = 15;
+                                        $category = $review['thrill'];
+                                        include("/students/qvh7fp/students/qvh7fp/private/sprint4/components/RatingStars.php");
+                                      ///include("/opt/src/sprint4/components/RatingStars.php");
+                                    ?>
                                 </div>
                             </div>
                             <div class="col-sm-6 d-flex justify-content-center">
                                 <div class="row align-items-center">
                                     <p class="mr-2">Scare:</p>
-                                    <form action="#" method="POST">
-                                        <div class="star-rating mb-2">
-                                            <input type="checkbox" id="star15"><label for="star15">&#9733;</label>
-                                            <input type="checkbox" id="star16"><label for="star16">&#9733;</label>
-                                            <input type="checkbox" id="star17"><label for="star17">&#9733;</label>
-                                            <input type="checkbox" id="star18"><label for="star18">&#9733;</label>
-                                            <input type="checkbox" id="star19"><label for="star19">&#9733;</label>
-                                        </div>
-                                    </form>
+                                    <?php
+                                        $star = 20;
+                                        $category = $review['scare'];
+                                        include("/students/qvh7fp/students/qvh7fp/private/sprint4/components/RatingStars.php");
+                                      ///include("/opt/src/sprint4/components/RatingStars.php");
+                                    ?>
                                 </div>
                             </div>
                         </div>
                         <div class="row align-items center w-100 justify-content-around">
                             <div class="row align-items-center">
                                 <p class="mr-2">Romance:</p>
-                                <form action="#" method="POST">
-                                    <div class="star-rating mb-2">
-                                        <input type="checkbox" id="star1A"><label for="star1A">&#9733;</label>
-                                        <input type="checkbox" id="star1B"><label for="star1B">&#9733;</label>
-                                        <input type="checkbox" id="star1C"><label for="star1C">&#9733;</label>
-                                        <input type="checkbox" id="star1D"><label for="star1D">&#9733;</label>
-                                        <input type="checkbox" id="star1E"><label for="star1E">&#9733;</label>
-                                    </div>
-                                </form>
+                                <?php
+                                    $star = 25;
+                                    $category = $review['romance'];
+                                    include("/students/qvh7fp/students/qvh7fp/private/sprint4/components/RatingStars.php");
+                                  ///include("/opt/src/sprint4/components/RatingStars.php");
+                                ?>
                             </div>
                         </div>
                     </div>
@@ -145,29 +156,23 @@
                             <div class="col-sm-6 d-flex justify-content-center">
                                 <div class="row align-items-center">
                                     <p class="mr-2">Acting:</p>
-                                    <form action="#" method="POST" class="d-flex">
-                                        <div class="star-rating mb-2">
-                                            <input type="checkbox" id="star1F"><label for="star1F">&#9733;</label>
-                                            <input type="checkbox" id="star20"><label for="star20">&#9733;</label>
-                                            <input type="checkbox" id="star21"><label for="star21">&#9733;</label>
-                                            <input type="checkbox" id="star22"><label for="star22">&#9733;</label>
-                                            <input type="checkbox" id="star23"><label for="star23">&#9733;</label>
-                                        </div>
-                                    </form>
+                                    <?php
+                                        $star = 30;
+                                        $category = $review['acting'];
+                                        include("/students/qvh7fp/students/qvh7fp/private/sprint4/components/RatingStars.php");
+                                      ///include("/opt/src/sprint4/components/RatingStars.php");
+                                    ?>
                                 </div>
                             </div>
                             <div class="col-sm-6 d-flex justify-content-center">
                                 <div class="row align-items-center">
                                     <p class="mr-2">Pacing:</p>
-                                    <form action="#" method="POST">
-                                        <div class="star-rating mb-2">
-                                            <input type="checkbox" id="star24"><label for="star24">&#9733;</label>
-                                            <input type="checkbox" id="star25"><label for="star25">&#9733;</label>
-                                            <input type="checkbox" id="star26"><label for="star26">&#9733;</label>
-                                            <input type="checkbox" id="star27"><label for="star27">&#9733;</label>
-                                            <input type="checkbox" id="star28"><label for="star28">&#9733;</label>
-                                        </div>
-                                    </form>
+                                    <?php
+                                        $star = 35;
+                                        $category = $review['pacing'];
+                                        include("/students/qvh7fp/students/qvh7fp/private/sprint4/components/RatingStars.php");
+                                      ///include("/opt/src/sprint4/components/RatingStars.php");
+                                    ?>
                                 </div>
                             </div>
                         </div>
@@ -175,44 +180,52 @@
                             <div class="col-sm-6 d-flex justify-content-center">
                                 <div class="row align-items-center">
                                     <p class="mr-2">Rewatchability:</p>
-                                    <form action="#" method="POST">
-                                        <div class="star-rating mb-2">
-                                            <input type="checkbox" id="star29"><label for="star29">&#9733;</label>
-                                            <input type="checkbox" id="star2A"><label for="star2A">&#9733;</label>
-                                            <input type="checkbox" id="star2B"><label for="star2B">&#9733;</label>
-                                            <input type="checkbox" id="star2C"><label for="star2C">&#9733;</label>
-                                            <input type="checkbox" id="star2D"><label for="star2D">&#9733;</label>
-                                        </div>
-                                    </form>
+                                    <?php
+                                        $star = 40;
+                                        $category = $review['rewatch'];
+                                        include("/students/qvh7fp/students/qvh7fp/private/sprint4/components/RatingStars.php");
+                                      ///include("/opt/src/sprint4/components/RatingStars.php");
+                                    ?>
                                 </div>
                             </div>
                             <div class="col-sm-6 d-flex justify-content-center">
                                 <div class="row align-items-center">
                                     <p class="mr-2">Cinematography:</p>
-                                    <form action="#" method="POST">
-                                        <div class="star-rating mb-2">
-                                            <input type="checkbox" id="star2E"><label for="star2E">&#9733;</label>
-                                            <input type="checkbox" id="star2F"><label for="star2F">&#9733;</label>
-                                            <input type="checkbox" id="star30"><label for="star30">&#9733;</label>
-                                            <input type="checkbox" id="star31"><label for="star31">&#9733;</label>
-                                            <input type="checkbox" id="star32"><label for="star32">&#9733;</label>
-                                        </div>
-                                    </form>
+                                    <?php
+                                        $star = 45;
+                                        $category = $review['cinema'];
+                                        include("/students/qvh7fp/students/qvh7fp/private/sprint4/components/RatingStars.php");
+                                      ///include("/opt/src/sprint4/components/RatingStars.php");
+                                    ?>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row justify-content-end mx-auto">
-                        <button type="submit" class="btn btn-primary">Submit Review</button>
+                        <?php
+                            if($review_found){
+                                echo "
                     </div>
-
                 </div>
-            </div>
+            </form>
+            <form action='?command=review' method='post' style='float: right;'>
+                <input type='hidden' name='title' value='" . $_POST['title'] . "'>
+                <input type='hidden' name='overwrite' value='true'>
+                <button type='submit' class='btn btn-primary mr-3'>Leave A New Review</button>
+            </form>";
+                            }
+                            else {
+                                echo '<button type="submit" class="btn btn-primary">Submit Review</button>
+                    </div>
+                </div>
+            </form>';
+                            }
+                        ?>
         </div>
 
         <?php
-        include("/students/qvh7fp/students/qvh7fp/private/sprint4/components/Footer.php");
-        //include("/opt/src/sprint4/components/Footer.php");
+            include("/students/qvh7fp/students/qvh7fp/private/sprint4/components/Footer.php");
+          ///include("/opt/src/sprint4/components/Footer.php");
         ?>
     </body>
 </html>
