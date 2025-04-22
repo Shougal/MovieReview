@@ -141,7 +141,7 @@ class MovieReviewController {
       ///include("/opt/src/sprint4/templates/account.php");
         include("/students/qvh7fp/students/qvh7fp/private/sprint4/templates/account.php");
       ///include("/opt/src/sprint4/components/warnDelete.php");
-        include("/students/qvh7fp/students/qvh7fp/private/sprint4/templates/warnDelete.php");
+        include("/students/qvh7fp/students/qvh7fp/private/sprint4/components/warnDelete.php");
     }
 
     function validateLogin(){

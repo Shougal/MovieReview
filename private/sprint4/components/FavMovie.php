@@ -16,6 +16,11 @@
         }
         $response = file_get_contents($apiUrl);
         $movies = json_decode($response, true);
+        if ($movies['Response'] == "False") {
+            $apiUrl = "https://www.omdbapi.com/?&apikey=".$this->api_key."&s=top";
+            $response = file_get_contents($apiUrl);
+            $movies = json_decode($response, true);
+        }
         $apiUrl = "https://www.omdbapi.com/?apikey=".$this->api_key."&i=".$movies["Search"][$top_movie_index]["imdbID"];
         $response = file_get_contents($apiUrl);
         $movie = json_decode($response, true);
