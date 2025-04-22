@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="styles/login.css">
         <link rel="stylesheet" href="styles/shared.css">
 
-        <script src="/qvh7fp/sprint4/js/custom.js"></script>
+        <script src="/qvh7fp/sprint4/js/mode.js"></script>
         <style id="theme"></style>
     </head>
     <body>
@@ -22,7 +22,7 @@
           ///include("/opt/src/sprint4/components/Navbar.php");
         ?>
 
-        <?php
+<?php
             if(isset($_SESSION["message"])){
                 echo '<div class="alert alert-danger" role="alert"> '.$_SESSION["message"].'</div>';
             }
@@ -61,7 +61,7 @@
                             </div>
                         </div>
                         <div class="col-5">
-                            <p style="color: black !important;">Explain why having an account is so good. This is basically lorem ipsum for now. Users can only leave reviews if they have an account and are signe din. recommendations are only customized for users. The whole site basically needs it.</p>
+                            <p style="color: black !important;">Logging in gives you access to the majority of our wonderful site. You can only leave reviews if you have an account and are signed in. Recommendations are only available for logged in users as well. Without being logged in, we are just a movie search website.</p>
                         </div>
                     </form>
                 </div>

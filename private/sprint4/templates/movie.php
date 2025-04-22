@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="styles/movie.css">
         <link rel="stylesheet" href="styles/shared.css">
 
-        <script src="/qvh7fp/sprint4/js/custom.js"></script>
+        <script src="/qvh7fp/sprint4/js/mode.js"></script>
         <style id="theme"></style>
     </head>
     <body>
@@ -21,36 +21,34 @@
             include("/students/qvh7fp/students/qvh7fp/private/sprint4/components/Navbar.php");
           ///include("/opt/src/sprint4/components/Navbar.php");
         ?>
-        <?php if(isset($_POST["title"])):
-            $sql = "SELECT * FROM movies_final WHERE title='" . $_POST["title"] . "'";
-            $movie = $this->db->query($sql)[0];
+        <?php if(isset($_POST["imdbID"])):
+            $apiUrl = "https://www.omdbapi.com/?apikey=".$this->api_key."&plot=full&i=".$_POST["imdbID"];
+            $response = file_get_contents($apiUrl);
+            $movie = json_decode($response, true);
             ?>
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-sm-6 p-0 m-0 my-auto">
-                                <img src="<?=$movie["thumbnail_url"]?>" alt="<?= $movie["title"] ?> thumbnail" style="width: 100%; max-height: 40rem; object-fit: cover; object-position: center;">
+                            <div class="col-sm-4 p-0 m-0 my-auto">
+                                <img class="ml-3" src="<?=$movie["Poster"]?>" alt="<?= $movie["Title"] ?> Poster" style="width: 90%;">
                             </div>
-                            <div class="col-sm-6 d-flex flex-column align-items-center">
-                                <h5 class="card-title text-light"><?= $movie["title"]?></h5>
-                                <p class="card-text text-light"><?= $movie["bio"] ?></p>
-                                <br>
-                                <h3 class="text-light"> Average Community Ratings: </h3>
-                                <p class="card-text text-light"><?= "Overall: " . $movie["avg_overall"] ?></p>
-                                <p class="card-text text-light"><?= "Feel-Good: " .$movie["avg_feel_good"] ?></p>
-                                <p class="card-text text-light"><?= "Suspense: " .$movie["avg_suspense"] ?></p>
-                                <p class="card-text text-light"><?= "Thrill: " .$movie["avg_thrill"] ?></p>
-                                <p class="card-text text-light"><?= "Scare: " .$movie["avg_scare"] ?></p>
-                                <p class="card-text text-light"><?= "Romance: " .$movie["avg_romance"] ?></p>
-                                <p class="card-text text-light"><?= "Acting: " .$movie["avg_acting"] ?></p>
-                                <p class="card-text text-light"><?= "Pacing: " .$movie["avg_pacing"] ?></p>
-                                <p class="card-text text-light"><?= "Rewatchability: " .$movie["avg_rewatch"] ?></p>
-                                <p class="card-text text-light"><?= "Cinematography: " .$movie["avg_cinema"] ?></p>
+                            <div class="col-sm-5 d-flex flex-column align-items-center justify-content-center">
+                                <h1 class="card-title text-light mb-5"><?= $movie["Title"]?></h1>
+                                <p class="card-text text-light mb-5"><?= $movie["Plot"] ?></p>
+                            </div>
+                            <div class="col-sm-3 d-flex flex-column align-items-center justify-content-center">
+                                <div class="card text-dark bg-light p-4">
+                                    <h5 class="card-title ">Internet Ratings:</h5>
+                                    <br>
+                                    <?php foreach ($movie["Ratings"] as $rating): ?>
+                                        <p class="card-text"><?= $rating["Source"] . ": " . $rating["Value"] ?></p>
+                                    <?php endforeach ?>    
+                                </div>
                             </div>
                         </div>
                         <form action="?command=review" method="post" style="float: right;">
                             <?php
-                            echo "<input type='hidden' name='title' value='" . $_POST['title'] . "'>";
+                            echo "<input type='hidden' name='imdbID' value='" . $movie['imdbID'] . "'>";
                             ?>
                             <button type="submit" class="btn btn-primary">Review This Movie</button>
                         </form>

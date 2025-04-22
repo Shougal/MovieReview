@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="styles/review.css">
         <link rel="stylesheet" href="styles/shared.css">
 
-        <script src="/qvh7fp/sprint4/js/custom.js"></script>
+        <script src="/qvh7fp/sprint4/js/mode.js"></script>
         <script src="/qvh7fp/sprint4/js/submitReview.js"></script>
         <style id="theme"></style>
     </head>
@@ -24,9 +24,10 @@
           ///include("/opt/src/sprint4/components/Navbar.php");
         ?>
         <?php
-            $sql = "SELECT * FROM movies_final WHERE title = '".$_POST["title"]."';";
-            $movie = $this->db->query($sql)[0];
-            $sql = "SELECT * FROM reviews_final WHERE movie_id = '".$movie['id']."';";
+            $apiUrl = "https://www.omdbapi.com/?apikey=".$this->api_key."&i=".$_POST["imdbID"];
+            $response = file_get_contents($apiUrl);
+            $movie = json_decode($response, true);
+            $sql = "SELECT * FROM reviews_final WHERE \"imdbID\" = '".$movie['imdbID']."';";
             $review = $this->db->query($sql);
             $review_found = false;
             if(sizeof($review) == 0 || isset($_POST['overwrite'])){
@@ -52,21 +53,18 @@
         <div class="container-xxl">
             <div id="message"></div>
             <form class="row justify-content-between" action="?command=leave-review" id="review-form" method="post">
-                <input type="hidden" value="<?= $movie['title']?> " name="title">
+                <input type="hidden" value="<?= $movie['imdbID']?> " name="imdbID">
                 <div class="col-xl-5 mx-auto">
                     <div class="row align-items-center justify-content-center mx-auto">
-                        <h1>Movie Title</h1>
-                        <div class="add-fav-heart ml-3 mt-1" id="favorite">
-                            <input type="checkbox" id="fav"><label for="fav" class="d-flex align-items-center">&#9825; <span class="heart-txt ml-1">Favorite</span></label>
-                        </div>
+                        <h1><?= $movie['Title'] ?></h1>
                     </div>
                     <div class="row justify-content-center">
-                        <img src="<?= $movie['thumbnail_url']?>" alt="<?= $movie['title']?> thumbnail" style="width: 100%; max-height: 30rem; object-fit: cover; object-position: center;">
+                        <img src="<?= $movie['Poster']?>" alt="<?= $movie['Title']?> Poster" style="height: 100%; width: auto;">
                     </div>
                     <div class="row mt-2">
                         <div class="form-group col-12 pr-4 text-light">
                             <h6><label for="review"> Leave a Review: </label></h6>
-                            <textarea class="form-control mr-2" id="review" name="review" rows="7" placeholder="(Optional)"><?= $review["review"] ?></textarea>
+                            <textarea class="form-control mr-2" id="review" name="review" rows="7" placeholder="(Optional)" <?= $review_found ? "disabled" : ""?> ><?= $review["review"] ?></textarea>
                         </div>
                     </div>
                 </div>
@@ -209,7 +207,7 @@
                 </div>
             </form>
             <form action='?command=review' method='post' style='float: right;'>
-                <input type='hidden' name='title' value='" . $_POST['title'] . "'>
+                <input type='hidden' name='imdbID' value='" . $_POST['imdbID'] . "'>
                 <input type='hidden' name='overwrite' value='true'>
                 <button type='submit' class='btn btn-primary mr-3'>Leave A New Review</button>
             </form>";

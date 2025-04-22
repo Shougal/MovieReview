@@ -59,16 +59,18 @@
         <div class="mb-5">
             <div class="row d-flex justify-content-center">
                 <div class="col-lg-8">
-                    <!--TODO: Add user friendly description-->
                     <p>
-                        This application allows users to rate and review movies. Ratings and reviews are stored in a database and reflected dynamically on the user interface. The app features a secure login system, personalized user pages, and a recommendation engine that suggests movies based on user preferences.
+                        This is a project made for the CS4640 course at the University of Virginia.
+                        </p>
+                        <p>
+                         This application allows users to rate and review movies, and recieve recommendations. Ratings and reviews are stored in a database and reflected dynamically on the user interface. The app features a secure login system, personalized pages, and a recommendation engine that suggests movies based on user preferences.
                     </p>
                 </div>
             </div>
         </div>
         <!-- Section: Text -->
 
-        <!-- TODO: Add Section: Social if we end up wanting to add github repo -->
+        <!-- Social if we end up wanting to add github repo -->
         <!-- <section class="text-center mb-5">
           <a href="" class="text-white me-4">
             <i class="fab fa-facebook-f"></i>

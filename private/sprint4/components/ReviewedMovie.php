@@ -1,22 +1,23 @@
 <div class="container-xxl m-3">
     <?php
-    $sql = "SELECT * FROM reviews_final where user_id = $user_id AND movie_id = $movie_id;";
+    $sql = "SELECT * FROM reviews_final where user_id = $user_id AND \"imdbID\" = '".$imdbID."';";
     $review = $this->db->query($sql)[0];
-    $sql = "SELECT * FROM movies_final where id= $movie_id";
-    $movie = $this->db->query($sql)[0];
+    $apiUrl = "https://www.omdbapi.com/?apikey=".$this->api_key."&plot=full&i=".$imdbID;
+    $response = file_get_contents($apiUrl);
+    $movie = json_decode($response, true);
     ?>
     <div class="card m-0 p-0 fav-movie-card">
         <div class="row align-items-center">
             <div class="col-md-3 m-0 img-container">
-                <img class="fav-movie-img" src="<?= $movie['thumbnail_url'] ?>" alt="Cover art for <?= $movie['title'] ?>" style="height: 30rem;">
+                <img class="fav-movie-img" src="<?= $movie['Poster'] ?>" alt="Poster for <?= $movie['Title'] ?>" style="height: 30rem;">
             </div>
             <div class="col-md-9 pl-5 pr-5 m-0 d-flex flex-column" style="height: 100%">
                 <div class="row mt-3">
                     <div class="col-md-5 pt-2 my-auto pb-5">
-                        <h2 class="text-light"><?= $movie['title'] ?></h2>
-                        <p class="text-light"><?= $movie['bio'] ?></p>
+                        <h2 class="text-light"><?= $movie['Title'] ?></h2>
+                        <p class="text-light"><?= $movie['Plot'] ?></p>
                         <form class="pl-0 ml-0" action="?command=movie" method="post">
-                            <input type="hidden" name="title" value="<?= $movie['title'] ?>">
+                            <input type="hidden" name="imdbID" value="<?= $movie['imdbID'] ?>">
                             <button type="submit" class="btn btn-light fav-button">Learn About This Title</button>
                         </form>
                     </div>
@@ -151,7 +152,7 @@
                             </div>
                         </div>
                         <form action="?command=review" method="post" class="col-md-4 pl-0 ml-0 mb-3 float-right">
-                            <?= "<input type='hidden' name='title' value='" . $movie['title'] . "'>
+                            <?= "<input type='hidden' name='imdbID' value='" . $movie['imdbID'] . "'>
                              <input type='hidden' name='overwrite' value='true'>" ?>
                             <button type="submit" class="btn btn-primary fav-button">Change Your Review</button>
                         </form>

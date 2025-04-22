@@ -3,6 +3,8 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 class MovieReviewController {
     private $db;
+    private $api_key;
+
     /**
      * Constructor
      */
@@ -10,6 +12,7 @@ class MovieReviewController {
         session_start();
         $this->db = new Database();
         $this->input=$input;
+        $this->api_key = Config::$private_api_key;
     }
 
     public function run() {
@@ -46,9 +49,6 @@ class MovieReviewController {
             case "logout":
                 $this->logout();
                 break;
-            case 'add_movie':
-                $this->addMovie();
-                break;
             case "search":
                 $this->searchMovies();
                 break;
@@ -56,16 +56,22 @@ class MovieReviewController {
                 $this->changePfp();
                 break;
             case "api_get_movies":
-                $this->getMoviesAsJson();
-                break;
+                $this->api_get_movies();
+                break;    
             case "api_get_reviews":
                 $this->getReviewsAsJson();
                 break;
-            case "db-destroy": //TODO: Take this out before publishing officially - dev tool only
-                $this->destroyDB();
-                break;
             case "leave-review":
                 $this->leaveReview();
+                break;
+            case "warn-delete":
+                $this->warnDelete();
+                break;
+            case "delete-account":
+                $this->deleteAccount();
+                break;    
+            case "db-destroy": //todo: remove
+                $this->destroyDB();
                 break;
             case "home":
             default:
@@ -76,42 +82,66 @@ class MovieReviewController {
 
     function destroyDB() {
         $this->db->dropTables();
+        session_destroy();
+        session_start();
     }
 
     function showLogin(){
-      /// include("/opt/src/sprint4/templates/login.php");
-       include("/students/qvh7fp/students/qvh7fp/private/sprint4/templates/login.php");
+      ///include("/opt/src/sprint4/templates/login.php");
+        include("/students/qvh7fp/students/qvh7fp/private/sprint4/templates/login.php");
     }
     function showAccount(){
-      /// include("/opt/src/sprint4/templates/account.php");
-       include("/students/qvh7fp/students/qvh7fp/private/sprint4/templates/account.php");
+        $sql = "SELECT * FROM users_final WHERE email = '".$_SESSION['email']."';";
+        $user_id = $this->db->query($sql)[0]["id"];
+        $sql = "SELECT * FROM reviews_final WHERE user_id = '".$user_id."';";
+        $_SESSION["user_reviews"] =  $this->db->query($sql);
+      ///include("/opt/src/sprint4/templates/account.php");
+        include("/students/qvh7fp/students/qvh7fp/private/sprint4/templates/account.php");
     }
     function showUserMovies(){
-      /// include("/opt/src/sprint4/templates/userMovies.php");
-       include("/students/qvh7fp/students/qvh7fp/private/sprint4/templates/userMovies.php");
+      ///include("/opt/src/sprint4/templates/userMovies.php");
+        include("/students/qvh7fp/students/qvh7fp/private/sprint4/templates/userMovies.php");
     }
     function showRecommendations(){
-      /// include("/opt/src/sprint4/templates/userRecommendation.php");
-       include("/students/qvh7fp/students/qvh7fp/private/sprint4/templates/userRecommendation.php");
+        if (!isset($_SESSION["email"])){
+            $this->showLogin();
+            return;
+        }
+        ///include("/opt/src/sprint4/templates/userRecommendation.php");
+        include("/students/qvh7fp/students/qvh7fp/private/sprint4/templates/userRecommendation.php");
     }
     function showReview(){
-      /// include("/opt/src/sprint4/templates/review.php");
-       include("/students/qvh7fp/students/qvh7fp/private/sprint4/templates/review.php");
+        if (!isset($_SESSION["email"])){
+            $this->showLogin();
+            return;
+        }
+      ///include("/opt/src/sprint4/templates/review.php");
+        include("/students/qvh7fp/students/qvh7fp/private/sprint4/templates/review.php");
         
     }
     function showHome(){
-      /// include("/opt/src/sprint4/templates/home.php");
-       include("/students/qvh7fp/students/qvh7fp/private/sprint4/templates/home.php");
+      ///include("/opt/src/sprint4/templates/home.php");
+        include("/students/qvh7fp/students/qvh7fp/private/sprint4/templates/home.php");
         
     }
     function showAddMovieForm() {
-      /// include("/opt/src/sprint4/templates/addMovie.php");
-       include("/students/qvh7fp/students/qvh7fp/private/sprint4/templates/addMovie.php");
+      ///include("/opt/src/sprint4/templates/addMovie.php");
+        include("/students/qvh7fp/students/qvh7fp/private/sprint4/templates/addMovie.php");
     }
 
     function showMovie() {
-      /// include("/opt/src/sprint4/templates/movie.php");
-       include("/students/qvh7fp/students/qvh7fp/private/sprint4/templates/movie.php");
+        if(!isset($_POST["imdbID"])){
+            $this->showHome();
+            return;
+        }
+      ///include("/opt/src/sprint4/templates/movie.php");
+        include("/students/qvh7fp/students/qvh7fp/private/sprint4/templates/movie.php");
+    }
+    function warnDelete(){
+      ///include("/opt/src/sprint4/templates/account.php");
+        include("/students/qvh7fp/students/qvh7fp/private/sprint4/templates/account.php");
+      ///include("/opt/src/sprint4/components/warnDelete.php");
+        include("/students/qvh7fp/students/qvh7fp/private/sprint4/templates/warnDelete.php");
     }
 
     function validateLogin(){
@@ -119,18 +149,18 @@ class MovieReviewController {
         if(isset($_POST["username"]) && isset($_POST["email"]) && isset($_POST["password"])){
             if(strlen($_POST["username"])<3){
                 $_SESSION["message"] = "Username must be at least 3 characters";
-               include("/students/qvh7fp/students/qvh7fp/private/sprint4/templates/login.php");
-              /// include("/opt/src/sprint4/templates/login.php");
+                include("/students/qvh7fp/students/qvh7fp/private/sprint4/templates/login.php");
+              ///include("/opt/src/sprint4/templates/login.php");
                 return;
             } else if (!preg_match("/^[a-zA-Z0-9._]+@[a-zA-Z0-9.]+\.[a-zA-Z]{2,}$/", $_POST["email"])) {
                 $_SESSION["message"] = "Invalid Email";
-               include("/students/qvh7fp/students/qvh7fp/private/sprint4/templates/login.php");
-              /// include("/opt/src/sprint4/templates/login.php");
+                include("/students/qvh7fp/students/qvh7fp/private/sprint4/templates/login.php");
+              ///include("/opt/src/sprint4/templates/login.php");
                 return;
             } else if (strlen($_POST["password"]<8)) {
                 $_SESSION["message"] = "Password must be at least 8 characters";
-               include("/students/qvh7fp/students/qvh7fp/private/sprint4/templates/login.php");
-              /// include("/opt/src/sprint4/templates/login.php");
+                include("/students/qvh7fp/students/qvh7fp/private/sprint4/templates/login.php");
+              ///include("/opt/src/sprint4/templates/login.php");
                 return;
             }
 
@@ -174,43 +204,35 @@ class MovieReviewController {
         session_start();
         $this->showHome();
     }
-    function addMovie() {
-        if (!isset($_SESSION['email'])) {
-           $this->showLogin();
-           $_SESSION['message'] = "You are not logged in";
-           return;
-        }
-        if (!(isset($_POST['title']) &&  isset($_POST['bio']))) {
-            $this->showAddMovieForm();
-            return;
-        }
-
-        $sql = "INSERT INTO movies_final (title, bio, thumbnail_url) VALUES ($1, $2, $3) ON CONFLICT (title) DO NOTHING;";
-        $this->db->query($sql, $_POST['title'], $_POST['bio'],$_POST['url']);
-        $this->showHome();
-    }
 
     private function searchMovies() {
-        $query = isset($_GET['query']) ? trim($_GET['query']) : '';  // Get the search query from input, defaulting to an empty string if not set
+        $query = isset($_GET['query']) ? trim($_GET['query']) : 'a';  // Get the search query from input, defaulting to an empty string if not set
+        if(strlen($query) < 3){
+            $_SESSION['search_results'] = "You must enter at least 3 characters to search";
+            include("/students/qvh7fp/students/qvh7fp/private/sprint4/templates/Search.php");
+          ///include("/opt/src/sprint4/templates/Search.php");
+            return;
+        }
         //
         // Validate the input
-        if (!preg_match("/^[a-zA-Z0-9\s]*$/", $query)) {
-            $_SESSION['search_results'] = "Invalid input. Only alphanumeric characters and spaces are allowed.";
-           include("/students/qvh7fp/students/qvh7fp/private/sprint4/templates/Search.php");
-          /// include("/opt/src/sprint4/templates/Search.php");
+        if (!preg_match("/^[a-zA-Z0-9]*$/", $query)) {
+            $_SESSION['search_results'] = "Invalid input. Only alphanumeric characters are allowed.";
+            include("/students/qvh7fp/students/qvh7fp/private/sprint4/templates/Search.php");
+          ///include("/opt/src/sprint4/templates/Search.php");
             return;
         }
 
-        $sql = 'SELECT * FROM movies_final WHERE title ILIKE $1;';
-        $movies = $this->db->query($sql, '%'.$query.'%');
+        $apiUrl = "https://www.omdbapi.com/?apikey=".$this->api_key."&s=".$query;
+        $response = file_get_contents($apiUrl);
+        $movies = json_decode($response, true);
 
-        if (!empty($movies)) {
-            $_SESSION['search_results'] = $movies;
+        if ($movies['Response'] == "True") {
+            $_SESSION['search_results'] = $movies["Search"];
         } else {
             $_SESSION['search_results'] = "No results found for '" . htmlspecialchars($query) . "'.";
         }
-       include("/students/qvh7fp/students/qvh7fp/private/sprint4/templates/Search.php");
-      /// include("/opt/src/sprint4/templates/Search.php");
+        include("/students/qvh7fp/students/qvh7fp/private/sprint4/templates/Search.php");
+      ///include("/opt/src/sprint4/templates/Search.php");
     }
 
     function changePfp(){
@@ -235,25 +257,11 @@ class MovieReviewController {
         }
         $this->showAccount();
     }
-
-    public function getMoviesAsJson() {
-        $query = isset($_GET['query']) ? trim($_GET['query']) : '';
-        $sql = 'SELECT * FROM movies_final WHERE title ILIKE $1;';
-        $movies = $this->db->query($sql, '%'.$query.'%');
-        header('Content-Type: application/json');
-        if(empty($movies)){
-            echo "no movies";
-        } else {
-            echo json_encode($movies);
-        }
-    }
     public function getReviewsAsJson() {
-        $sql = "SELECT id FROM  users_final WHERE email = '".$_SESSION["email"]."';";
-        $user_id = $this->db->query($sql)[0]["id"];
-        $reviews = $this->db->query("SELECT * FROM reviews_final WHERE user_id = '".$user_id."';");
+        $reviews = $this->db->query("SELECT * FROM reviews_final;");
         header('Content-Type: application/json');
         if(empty($reviews)){
-            echo "You have not left any reviews";
+            echo "There are no reviews";
         } else {
             echo json_encode($reviews);
         }
@@ -286,9 +294,10 @@ class MovieReviewController {
         }
         $sql = "SELECT id FROM users_final WHERE email = '".$_SESSION["email"]."';";
         $user_id = $this->db->query($sql)[0]["id"];
-        $trimmed_title =  trim($_POST['title']);
-        $sql = "SELECT id FROM movies_final WHERE title = '".$trimmed_title."';";
-        $movie_id = $this->db->query($sql)[0]["id"];
+        $apiUrl = "https://www.omdbapi.com/?apikey=".$this->api_key."&i=".$_POST['imdbID'];
+        $response = file_get_contents($apiUrl);
+        $movie = json_decode($response, true);
+        $imdbID = $movie["imdbID"];
         $review = $_POST["review"];
         $overall =      $this->get_rating(isset($_POST["star0"]), isset($_POST["star1"]), isset($_POST["star2"]), isset($_POST["star3"]), isset($_POST["star4"]));
         $feel_good =    $this->get_rating(isset($_POST["star5"]), isset($_POST["star6"]), isset($_POST["star7"]), isset($_POST["star8"]), isset($_POST["star9"]));
@@ -300,10 +309,26 @@ class MovieReviewController {
         $pacing =       $this->get_rating(isset($_POST["star35"]), isset($_POST["star36"]), isset($_POST["star37"]), isset($_POST["star38"]), isset($_POST["star39"]));
         $rewatch =      $this->get_rating(isset($_POST["star40"]), isset($_POST["star41"]), isset($_POST["star42"]), isset($_POST["star43"]), isset($_POST["star44"]));
         $cinema =       $this->get_rating(isset($_POST["star45"]), isset($_POST["star46"]), isset($_POST["star47"]), isset($_POST["star48"]), isset($_POST["star49"]));
-        $sql = "INSERT INTO reviews_final (user_id, movie_id,review,overall,feel_good,suspense,thrill,scare,romance,acting,pacing,rewatch,cinema)
-                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) ON CONFLICT (user_id,movie_id) DO UPDATE SET review=EXCLUDED.review, overall=EXCLUDED.overall,feel_good=EXCLUDED.feel_good,suspense=EXCLUDED.suspense,thrill=EXCLUDED.thrill,scare=EXCLUDED.scare,romance=EXCLUDED.romance,acting=EXCLUDED.acting,pacing=EXCLUDED.pacing,rewatch=EXCLUDED.rewatch,cinema=EXCLUDED.cinema;";
-        $this->db->query($sql, $user_id,$movie_id,$review,$overall,$feel_good,$suspense,$thrill,$scare,$romance,$acting,$pacing,$rewatch,$cinema);
+        $sql = "INSERT INTO reviews_final (user_id, \"imdbID\",review,overall,feel_good,suspense,thrill,scare,romance,acting,pacing,rewatch,cinema)
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) ON CONFLICT (user_id,\"imdbID\") DO UPDATE SET review=EXCLUDED.review, overall=EXCLUDED.overall,feel_good=EXCLUDED.feel_good,suspense=EXCLUDED.suspense,thrill=EXCLUDED.thrill,scare=EXCLUDED.scare,romance=EXCLUDED.romance,acting=EXCLUDED.acting,pacing=EXCLUDED.pacing,rewatch=EXCLUDED.rewatch,cinema=EXCLUDED.cinema;";
+        $this->db->query($sql, $user_id,$imdbID,$review,$overall,$feel_good,$suspense,$thrill,$scare,$romance,$acting,$pacing,$rewatch,$cinema);
         $_SESSION["message"] = "Your review has been submitted";
         $this->showHome();
+    }
+    function deleteAccount(){
+        $sql = "DELETE FROM users_final WHERE email = '".$_SESSION["email"]."';";
+        $this->db->query($sql);
+        session_destroy();
+        session_start();
+        $_SESSION["message"] = "Your account has been deleted";
+        $this->showHome();
+    }
+    function api_get_movies(){
+        $query = $_GET['title'];
+        header('Content-Type: application/json');
+        $apiUrl = "https://www.omdbapi.com/?apikey=".$this->api_key."&s=".$query;
+        $response = file_get_contents($apiUrl);
+        $data = json_decode($response, true);
+        echo json_encode($data['Search']);
     }
 }

@@ -16,7 +16,8 @@
             <link rel="stylesheet" href="styles/shared.css">
 
             <style id="theme"></style>
-            <script src="/qvh7fp/sprint4/js/custom.js"></script>
+            <script src="/qvh7fp/sprint4/js/mode.js"></script>
+            <script src="/qvh7fp/sprint4/js/search.js"></script>
         </head>
     <body>
         <?php
@@ -27,42 +28,59 @@
         <div class="text-light ml-5">
             <?php
             if (isset($_POST['reviewing'])){
-                echo "<h1 class='mt-2 mb-3'> Select A Movie To Review</h1>";
+                echo "<h1 class='mt-2 mb-3'> Search for A Movie To Review</h1>";
             } else {
                 echo "<h1 class='mt-2 mb-3'> Search Results</h1>";
             }
+            echo "<div class='row'><div class='col-md-12'>";
             if (is_array($_SESSION['search_results'])) {
-                echo "<div class='row'><div class='col-md-6'>";
+                $count = 0;
+                echo "<div>";
                 foreach ($_SESSION['search_results'] as $movie) {
-                    echo "<div class='row'>
+                    if ($count % 3 ==0) {
+                        echo "</div><div class='row'>";
+                    }
+                    $count++;
+                    echo "<div class='col-md-4'>
                             <form action='?command=". (isset($_POST['reviewing']) ? 'review' : 'movie') ."' method='post' style='width: 100%;'>
                                 <div class='row' style='width: 100%;'>
-                                    <input type='hidden' name='title' value='" . $movie['title'] . "'>
+                                    <input type='hidden' name='imdbID' value='" . $movie['imdbID'] . "'>
                                     <button type='submit' class='card btn btn-text ml-3 mt-1 mb-3 p-0' style='width: 100%;'>
                                         <div class='row'>
                                             <div class='col-sm-6'>
-                                                <img src='". $movie['thumbnail_url'] . "' alt = 'Movie Thumbnail' style='width: 100%; height: 12rem; object-fit: cover;'>
+                                                <img src='". $movie['Poster'] . "' alt = '".$movie['Title']." Poster' style='width: 100%; height: 12rem; object-fit: cover;'>
                                             </div>
                                             <div class='col-sm-6 d-flex flex-column justify-content-center'>
-                                                <h2 style='white-space: normal;'>" . $movie['title'] . "</h2>
-                                                <p>" . $movie['bio'] . "</p>
+                                                <h2 style='white-space: normal;'>" . $movie['Title'] . "</h2>
                                             </div>
                                         </div>
                                     </button>
                                 </div>
                             </form>
-                    </div>
+                        </div>
                     ";
                 }
+                echo "</div>";
             } else {
-                echo "<p>" . $_SESSION['search_results'] . "</p>";
+                if(isset($_POST['reviewing'])){
+                    // <script src="/qvh7fp/sprint4/js/search.js"></script> //TODO;
+                    echo '<form class="form-inline my-2 my-lg-0 mr-auto" method="get">
+                                <input type="hidden" name="command" value="search">
+                                <div class="d-flex flex-column" style="position: relative;">
+                                    <input class="form-control mr-sm-2" type="search" placeholder="Search All Movies" aria-label="Search" name="query" id="search-bar-js">
+                                    <div id="search-results-container" style="position: absolute; z-index: 1000; margin-top:3rem; background-color: white; color: black; border-radius: 50px;">
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
+                            </form>';
+                    echo "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>";
+                } else {
+                    echo "<p>" . $_SESSION['search_results'] . "</p>";
+                }
             }
-            echo "</div><div class='col-md-6'><form action='?command=add_movie' method='post' class='mr-3' style='float: right;'>
-                      Cant Find What You're Looking For?
-                      <button type='submit'> Add a New Movie</button>
-                  </form>
-                  </div></div>";
             ?>
+        </div>
+        </div>
         </div>
 
         <?php

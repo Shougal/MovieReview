@@ -1,6 +1,6 @@
 window.addEventListener("load", () => {
     if (localStorage.getItem("mode")){
-        localStorage.getItem("mode") === "dark-mode" ? createDarkMode() : createLightMode();
+        localStorage.getItem("mode") === "light-mode" ? createLightMode() : createDarkMode();
     }
     else { createDarkMode(); }
 });

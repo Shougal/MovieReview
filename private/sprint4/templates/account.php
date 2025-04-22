@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="styles/home.css">
         <link rel="stylesheet" href="styles/shared.css">
 
-        <script src="/qvh7fp/sprint4/js/custom.js"></script>
+        <script src="/qvh7fp/sprint4/js/mode.js"></script>
         <style id="theme"></style>
     </head>
     <body>
@@ -23,7 +23,7 @@
         ?>
 
         <?php if (isset($_SESSION['email'])): ?>
-            <div class="row" style="height: 10rem;">
+            <div class="row">
                 <div class="card mx-auto mt-4 col-10" id="account-card">
                     <h2 class="card-title font-weight-bold">
                         Account Information
@@ -32,10 +32,6 @@
                         <div class="col-5 d-flex flex-column align-items-center">
                             <?= "<img src='images/".$_SESSION["pfp"]."' alt='Profile photo for the active user' class='ml-2' id='pfp' style='height:200px; width:200px;'>" ?>
                             <?= "<p class='mt-3'>" . $_SESSION["username"] . "</p>" ?>
-                        </div>
-                        <div class="col-5 m-auto">
-                            <?= "<p class='mt-3'>Username: " . $_SESSION["username"] . "</p>" ?>
-                            <?= "<p class='mt-3'>Email: " . $_SESSION["email"] . "</p>" ?>
                             <form action="?command=set-pfp" method="POST">
                                 <h4>Set your profile picture color</h4>
                                 <div class="d-flex" style="gap: 5px;">
@@ -53,21 +49,30 @@
                                 </div>
                                 <button type="submit" class="btn">Submit</button>
                             </form>
+                        </div>
+                        <div class="col-5 m-auto">
+                            <?= "<p class='mt-3'>Username: " . $_SESSION["username"] . "</p>" ?>
+                            <?= "<p class='mt-3'>Email: " . $_SESSION["email"] . "</p>" ?>
+                            <?php 
+                            $avg = 0;
+                            foreach($_SESSION["user_reviews"] as $review){
+                                $avg += $review["overall"];
+                            }
+                            $num_reviews = sizeof($_SESSION["user_reviews"]);
+                            $avg = $num_reviews > 0 ? round($avg / $num_reviews,2) : 0;
+                            ?>
+                            <?= "<p class='mt-3'>Number of Reviews: " . $num_reviews . "</p>" ?>
+                            <?= "<p class='mt-3'>Average Rating Given: " . $avg . " Stars</p>" ?>                            
                             <form action="?command=logout" method="post">
-                                <button type="submit" class="btn-danger mt-4"> Logout</button>
+                                <button type="submit" class="btn btn-secondary mt-4"> Logout</button>
+                            </form>
+                            <form action="?command=warn-delete" method="POST">
+                                <button type="submit" class="btn btn-danger mt-2"> Delete Account</button>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <br>
-            <br>
-            <br><br>
-            <br>
-            <br>
-            <br>
-            <br>
         <?php endif; ?>
 
         <?php

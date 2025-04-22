@@ -16,4 +16,5 @@ class Config {
         "database" => "example"
     ];
     */
+    public static $private_api_key = "dd9f9aae";
 }

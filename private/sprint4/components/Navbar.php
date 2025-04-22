@@ -1,4 +1,3 @@
-<script src="/qvh7fp/sprint4/js/search.js"></script>
 <nav class="navbar navbar-expand-lg navbar-light ">
     <p class="navbar-brand ml-0 mt-0 mb-0 mr-4">
         <img src="images/MR.png" width="30" height="30" class="d-inline-block align-top" alt="">

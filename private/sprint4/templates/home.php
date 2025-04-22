@@ -15,7 +15,7 @@
         <link rel="stylesheet" href="styles/home.css">
         <link rel="stylesheet" href="styles/shared.css">
 
-        <script src="/qvh7fp/sprint4/js/custom.js"></script>
+        <script src="/qvh7fp/sprint4/js/mode.js"></script>
         <style id="theme"></style>
     </head>
     <body>

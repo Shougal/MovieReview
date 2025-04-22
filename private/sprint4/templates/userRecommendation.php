@@ -20,7 +20,8 @@
         <link rel="stylesheet" href="styles/shared.css">
         <link rel="stylesheet" href="styles/home.css">
 
-        <script src="/qvh7fp/sprint4/js/custom.js"></script>
+        <script src="/qvh7fp/sprint4/js/mode.js"></script>
+        <script src="/qvh7fp/sprint4/js/watch.js"></script>
         <style id="theme"></style>
     </head>
     <body>
@@ -30,27 +31,28 @@
         ?>
 
         <?php
-        $sql = "SELECT * FROM movies_final;"; //TODO: Recommendation algorithm
-        $recommendations = $this->db->query($sql);
+            $apiUrl = "https://www.omdbapi.com/?apikey=".$this->api_key."&s=what";
+            $response = file_get_contents($apiUrl);
+            $recommendations = json_decode($response, true);
         ?>
 
         <?php
-        $movie = $this->db->query($sql)[0];
-        $recQuality = 98;
-        include("/students/qvh7fp/students/qvh7fp/private/sprint4/components/Recommendation.php");
-      ///include("/opt/src/sprint4/components/Recommendation.php");
+            $imdbID = $recommendations['Search'][0]['imdbID'];
+            $recQuality = 98;
+            include("/students/qvh7fp/students/qvh7fp/private/sprint4/components/Recommendation.php");
+          ///include("/opt/src/sprint4/components/Recommendation.php");
         ?>
         <?php
-        $movie = $this->db->query($sql)[1];
-        $recQuality = 80;
-        include("/students/qvh7fp/students/qvh7fp/private/sprint4/components/Recommendation.php");
-      ///include("/opt/src/sprint4/components/Recommendation.php");
+            $imdbID = $recommendations['Search'][1]['imdbID'];
+            $recQuality = 80;
+            include("/students/qvh7fp/students/qvh7fp/private/sprint4/components/Recommendation.php");
+          ///include("/opt/src/sprint4/components/Recommendation.php");
         ?>
         <?php
-        $movie = $this->db->query($sql)[2];
-        $recQuality = 54;
-        include("/students/qvh7fp/students/qvh7fp/private/sprint4/components/Recommendation.php");
-      ///include("/opt/src/sprint4/components/Recommendation.php");
+            $imdbID = $recommendations['Search'][2]['imdbID'];
+            $recQuality = 54;
+            include("/students/qvh7fp/students/qvh7fp/private/sprint4/components/Recommendation.php");
+          ///include("/opt/src/sprint4/components/Recommendation.php");
         ?>
 
         <?php

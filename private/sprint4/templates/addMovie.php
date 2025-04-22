@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="styles/addMovie.css">
         <link rel="stylesheet" href="styles/shared.css">
 
-        <script src="/qvh7fp/sprint4/js/custom.js"></script>
+        <script src="/qvh7fp/sprint4/js/mode.js"></script>
         <style id="theme"></style>
     </head>
     <body>
@@ -26,11 +26,11 @@
             <div class="row mt-5">
                 <div class="col-2"></div>
                 <div class="card col-8">
-                    <div class="card-header" style="color: black !important;">
+                    <div class="card-header">
                         Add a Movie
                     </div>
                     <div class="card-body">
-                        <form action="?command=add_movie" method="post" class="d-flex flex-column align-items-start" style="color: black !important;">
+                        <form action="?command=add_movie" method="post" class="d-flex flex-column align-items-start">
                             <label class="d-flex align-items-start">
                                 Movie Title*
                                 <input type="text" name="title" id="title" placeholder="Title" class="ml-3" required>
@@ -44,7 +44,7 @@
                                 <input type="text" name="url" id="url" placeholder="Link" class="ml-3" required>
                             </label>
                             <button type="submit" class="mt-3">Add Movie</button>
-                            <p class="mt-2 mb-0 pb-0" style="color: black !important;"> * = required field</p>
+                            <p class="mt-2 mb-0 pb-0"> * = required field</p>
                         </form>
                     </div>
                 </div>

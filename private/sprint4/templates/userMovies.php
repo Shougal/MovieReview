@@ -19,7 +19,7 @@
         <link rel="stylesheet" href="styles/home.css">
         <link rel="stylesheet" href="styles/shared.css">
 
-        <script src="/qvh7fp/sprint4/js/custom.js"></script>
+        <script src="/qvh7fp/sprint4/js/mode.js"></script>
         <style id="theme"></style>
     </head>
     <body>
@@ -34,7 +34,7 @@
             $sql =  "SELECT * FROM reviews_final where user_id = '".$user_id."';";
             $reviews =  $this->db->query($sql);
             foreach ($reviews as $review) {
-                $movie_id = $review['movie_id'];
+                $imdbID = $review['imdbID'];
                 include("/students/qvh7fp/students/qvh7fp/private/sprint4/components/ReviewedMovie.php");
               ///include("/opt/src/sprint4/components/ReviewedMovie.php");
             }
