@@ -1,0 +1,8 @@
+<div class="star-rating mb-2">
+    <!-- All variables will be set in the file before including this php -->
+    <input type="checkbox" id="star<?=      (int) $star  ?>" name="star<?=      (int) $star  ?>"><label class="star" for="star<?=      (int) $star  ?>" <?= ($review['overall']===-1) ? "" : "style='color: ".($category>0 ? 'gold' :  'gray')."'" ?>>&#9733;</label>
+    <input type="checkbox" id="star<?= (1 + (int) $star) ?>" name="star<?= (1 + (int) $star) ?>"><label class="star" for="star<?= (1 + (int) $star) ?>" <?= ($review['overall']===-1) ? "" : "style='color: ".($category>1 ? 'gold' :  'gray')."'" ?>>&#9733;</label>
+    <input type="checkbox" id="star<?= (2 + (int) $star) ?>" name="star<?= (2 + (int) $star) ?>"><label class="star" for="star<?= (2 + (int) $star) ?>" <?= ($review['overall']===-1) ? "" : "style='color: ".($category>2 ? 'gold' :  'gray')."'" ?>>&#9733;</label>
+    <input type="checkbox" id="star<?= (3 + (int) $star) ?>" name="star<?= (3 + (int) $star) ?>"><label class="star" for="star<?= (3 + (int) $star) ?>" <?= ($review['overall']===-1) ? "" : "style='color: ".($category>3 ? 'gold' :  'gray')."'" ?>>&#9733;</label>
+    <input type="checkbox" id="star<?= (4 + (int) $star) ?>" name="star<?= (4 + (int) $star) ?>"><label class="star" for="star<?= (4 + (int) $star) ?>" <?= ($review['overall']===-1) ? "" : "style='color: ".($category>4 ? 'gold' :  'gray')."'" ?>>&#9733;</label>
+</div>

@@ -53,10 +53,16 @@ footer{
 }
 .deco-star-rating {
     font-size: 2rem;
-    color: gold;
+    /* color: gold; */
     display: flex;
     justify-content: end;
-    .unchecked {
+    /* .unchecked {
         color: grey;
-    }
+    } */
+}
+.checked {
+    color: #ffcc00;
+}
+.hovering {
+    color: #ffcc00;
 }
