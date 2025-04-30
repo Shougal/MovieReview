@@ -7,6 +7,9 @@
 ## Project Overview
 This application allows users to rate and review movies. Ratings and reviews are stored in a database and reflected dynamically on the user interface. The app features a secure login system, personalized user pages, and a recommendation engine that suggests movies based on user preferences.
 
+## Deployed version:
+visit: https://cs4640.cs.virginia.edu/xdq9qa/sprint4/
+
 ## Features
 
 ### Authentication and User Accounts
